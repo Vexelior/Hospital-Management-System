@@ -1,0 +1,47 @@
+﻿@model Core.Entities.Doctor
+
+@{
+    ViewData["Title"] = "Delete Doctor";
+}
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h3>Are you sure you want to delete this doctor?</h3>
+            <hr />
+            <dl class="row">
+                <dt class="col-sm-2">
+                    Name
+                </dt>
+                <dd class="col-sm-10">
+                    @Model.Name
+                </dd>
+                <dt class="col-sm-2">
+                    Specialties
+                </dt>
+                <dd class="col-sm-10">
+                    @foreach (var specialty in Model.Specialties)
+                    {
+                        @specialty.Specialty.Name <br />
+                    }
+                </dd>
+                <dt class="col-sm-2">
+                    Practices
+                </dt>
+                <dd class="col-sm-10">
+                    @foreach (var practice in Model.Practices)
+                    {
+                        @practice.Practice.Name <br />
+                    }
+                </dd>
+            </dl>
+
+            <form asp-action="Delete">
+                <input type="hidden" asp-for="Id" />
+                <input type="submit" value="Delete" class="btn btn-danger" />
+                <a class="btn btn-secondary text-light" asp-action="Index">Cancel</a>
+            </form>
+        </div>
+    </div>
+</div>

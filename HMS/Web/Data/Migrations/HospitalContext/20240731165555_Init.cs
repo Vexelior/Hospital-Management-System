@@ -5,7 +5,7 @@
 namespace Web.Data.Migrations.HospitalContext
 {
     /// <inheritdoc />
-    public partial class InitDoctor : Migration
+    public partial class Init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -14,112 +14,112 @@ namespace Web.Data.Migrations.HospitalContext
                 name: "Doctors",
                 columns: table => new
                 {
-                    DoctorId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Doctors", x => x.DoctorId);
+                    table.PrimaryKey("PK_Doctors", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Practice",
+                name: "Patients",
                 columns: table => new
                 {
-                    PracticeId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Age = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Patients", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Practices",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Location = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Practice", x => x.PracticeId);
+                    table.PrimaryKey("PK_Practices", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Specialty",
+                name: "Specialties",
                 columns: table => new
                 {
-                    SpecialtyId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Specialty", x => x.SpecialtyId);
+                    table.PrimaryKey("PK_Specialties", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "DoctorPractice",
+                name: "DoctorPractices",
                 columns: table => new
                 {
-                    DoctorId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    DoctorId1 = table.Column<int>(type: "int", nullable: false),
+                    DoctorId = table.Column<int>(type: "int", nullable: false),
                     PracticeId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_DoctorPractice", x => x.DoctorId);
+                    table.PrimaryKey("PK_DoctorPractices", x => new { x.DoctorId, x.PracticeId });
                     table.ForeignKey(
-                        name: "FK_DoctorPractice_Doctors_DoctorId1",
-                        column: x => x.DoctorId1,
+                        name: "FK_DoctorPractices_Doctors_DoctorId",
+                        column: x => x.DoctorId,
                         principalTable: "Doctors",
-                        principalColumn: "DoctorId",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_DoctorPractice_Practice_PracticeId",
+                        name: "FK_DoctorPractices_Practices_PracticeId",
                         column: x => x.PracticeId,
-                        principalTable: "Practice",
-                        principalColumn: "PracticeId",
+                        principalTable: "Practices",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "DoctorSpecialty",
+                name: "DoctorSpecialties",
                 columns: table => new
                 {
-                    DoctorId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    DoctorId1 = table.Column<int>(type: "int", nullable: false),
+                    DoctorId = table.Column<int>(type: "int", nullable: false),
                     SpecialtyId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_DoctorSpecialty", x => x.DoctorId);
+                    table.PrimaryKey("PK_DoctorSpecialties", x => new { x.DoctorId, x.SpecialtyId });
                     table.ForeignKey(
-                        name: "FK_DoctorSpecialty_Doctors_DoctorId1",
-                        column: x => x.DoctorId1,
+                        name: "FK_DoctorSpecialties_Doctors_DoctorId",
+                        column: x => x.DoctorId,
                         principalTable: "Doctors",
-                        principalColumn: "DoctorId",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_DoctorSpecialty_Specialty_SpecialtyId",
+                        name: "FK_DoctorSpecialties_Specialties_SpecialtyId",
                         column: x => x.SpecialtyId,
-                        principalTable: "Specialty",
-                        principalColumn: "SpecialtyId",
+                        principalTable: "Specialties",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_DoctorPractice_DoctorId1",
-                table: "DoctorPractice",
-                column: "DoctorId1");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_DoctorPractice_PracticeId",
-                table: "DoctorPractice",
+                name: "IX_DoctorPractices_PracticeId",
+                table: "DoctorPractices",
                 column: "PracticeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_DoctorSpecialty_DoctorId1",
-                table: "DoctorSpecialty",
-                column: "DoctorId1");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_DoctorSpecialty_SpecialtyId",
-                table: "DoctorSpecialty",
+                name: "IX_DoctorSpecialties_SpecialtyId",
+                table: "DoctorSpecialties",
                 column: "SpecialtyId");
         }
 
@@ -127,19 +127,22 @@ namespace Web.Data.Migrations.HospitalContext
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "DoctorPractice");
+                name: "DoctorPractices");
 
             migrationBuilder.DropTable(
-                name: "DoctorSpecialty");
+                name: "DoctorSpecialties");
 
             migrationBuilder.DropTable(
-                name: "Practice");
+                name: "Patients");
+
+            migrationBuilder.DropTable(
+                name: "Practices");
 
             migrationBuilder.DropTable(
                 name: "Doctors");
 
             migrationBuilder.DropTable(
-                name: "Specialty");
+                name: "Specialties");
         }
     }
 }

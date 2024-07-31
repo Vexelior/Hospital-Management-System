@@ -60,18 +60,27 @@ namespace Web.Controllers
         public async Task<IActionResult> Edit(int id)
         {
             var doctor = await _doctorService.GetDoctorByIdAsync(id);
+
             if (doctor == null)
             {
                 return NotFound();
             }
-            return View(doctor);
+
+            DoctorEditViewModel model = new()
+            {
+                Name = doctor.Name,
+                Specialties = [],
+                Practices = []
+            };
+
+            return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, Doctor doctor)
         {
-            if (id != doctor.DoctorId)
+            if (id != doctor.Id)
             {
                 return NotFound();
             }

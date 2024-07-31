@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Web.Data.Migrations.HospitalContext
 {
     [DbContext(typeof(Infrastructure.Data.HospitalContext))]
-    [Migration("20240731060547_InitDoctor")]
-    partial class InitDoctor
+    [Migration("20240731165555_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -26,16 +26,16 @@ namespace Web.Data.Migrations.HospitalContext
 
             modelBuilder.Entity("Core.Entities.Doctor", b =>
                 {
-                    b.Property<int>("DoctorId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DoctorId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("DoctorId");
+                    b.HasKey("Id");
 
                     b.ToTable("Doctors");
                 });
@@ -43,56 +43,40 @@ namespace Web.Data.Migrations.HospitalContext
             modelBuilder.Entity("Core.Entities.DoctorPractice", b =>
                 {
                     b.Property<int>("DoctorId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DoctorId"));
-
-                    b.Property<int>("DoctorId1")
                         .HasColumnType("int");
 
                     b.Property<int>("PracticeId")
                         .HasColumnType("int");
 
-                    b.HasKey("DoctorId");
-
-                    b.HasIndex("DoctorId1");
+                    b.HasKey("DoctorId", "PracticeId");
 
                     b.HasIndex("PracticeId");
 
-                    b.ToTable("DoctorPractice");
+                    b.ToTable("DoctorPractices");
                 });
 
             modelBuilder.Entity("Core.Entities.DoctorSpecialty", b =>
                 {
                     b.Property<int>("DoctorId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DoctorId"));
-
-                    b.Property<int>("DoctorId1")
                         .HasColumnType("int");
 
                     b.Property<int>("SpecialtyId")
                         .HasColumnType("int");
 
-                    b.HasKey("DoctorId");
-
-                    b.HasIndex("DoctorId1");
+                    b.HasKey("DoctorId", "SpecialtyId");
 
                     b.HasIndex("SpecialtyId");
 
-                    b.ToTable("DoctorSpecialty");
+                    b.ToTable("DoctorSpecialties");
                 });
 
             modelBuilder.Entity("Core.Entities.Patient", b =>
                 {
-                    b.Property<int>("PatientId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PatientId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("Age")
                         .HasColumnType("int");
@@ -100,18 +84,18 @@ namespace Web.Data.Migrations.HospitalContext
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("PatientId");
+                    b.HasKey("Id");
 
                     b.ToTable("Patients");
                 });
 
             modelBuilder.Entity("Core.Entities.Practice", b =>
                 {
-                    b.Property<int>("PracticeId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PracticeId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Location")
                         .HasColumnType("nvarchar(max)");
@@ -119,32 +103,32 @@ namespace Web.Data.Migrations.HospitalContext
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("PracticeId");
+                    b.HasKey("Id");
 
-                    b.ToTable("Practice");
+                    b.ToTable("Practices");
                 });
 
             modelBuilder.Entity("Core.Entities.Specialty", b =>
                 {
-                    b.Property<int>("SpecialtyId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SpecialtyId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("SpecialtyId");
+                    b.HasKey("Id");
 
-                    b.ToTable("Specialty");
+                    b.ToTable("Specialties");
                 });
 
             modelBuilder.Entity("Core.Entities.DoctorPractice", b =>
                 {
                     b.HasOne("Core.Entities.Doctor", "Doctor")
                         .WithMany("Practices")
-                        .HasForeignKey("DoctorId1")
+                        .HasForeignKey("DoctorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -163,7 +147,7 @@ namespace Web.Data.Migrations.HospitalContext
                 {
                     b.HasOne("Core.Entities.Doctor", "Doctor")
                         .WithMany("Specialties")
-                        .HasForeignKey("DoctorId1")
+                        .HasForeignKey("DoctorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

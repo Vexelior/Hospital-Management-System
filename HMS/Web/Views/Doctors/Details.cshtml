@@ -1,0 +1,44 @@
+﻿@model Core.Entities.Doctor
+
+@{
+    ViewData["Title"] = "Doctor Details";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h1>Doctor Details</h1>
+            <hr />
+            <dl class="row">
+                <dt class="col-sm-2">
+                    Name
+                </dt>
+                <dd class="col-sm-10">
+                    @Model.Name
+                </dd>
+                <dt class="col-sm-2">
+                    Specialties
+                </dt>
+                <dd class="col-sm-10">
+                    @foreach (var specialty in Model.Specialties)
+                    {
+                        @specialty.Specialty.Name <br />
+                    }
+                </dd>
+                <dt class="col-sm-2">
+                    Practices
+                </dt>
+                <dd class="col-sm-10">
+                    @foreach (var practice in Model.Practices)
+                    {
+                        @practice.Practice.Name <br />
+                    }
+                </dd>
+            </dl>
+        </div>
+        <div>
+            <a class="btn btn-primary" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
+            <a class="btn btn-secondary text-white"  asp-action="Index">Back to List</a>
+        </div>
+    </div>
+</div>
