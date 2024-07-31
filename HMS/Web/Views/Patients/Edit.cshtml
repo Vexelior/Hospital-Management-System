@@ -1,0 +1,31 @@
+﻿@model Application.DTOs.PatientDto
+
+@{
+    ViewData["Title"] = "Edit Patient";
+}
+
+<h1>Edit Patient</h1>
+<hr />
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <form asp-action="Edit" asp-controller="Patients" asp-area="" method="POST">
+                <input type="hidden" asp-for="PatientId" />
+                <div class="form-group">
+                    <label asp-for="Name" class="control-label"></label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Age" class="control-label"></label>
+                    <input asp-for="Age" class="form-control" />
+                    <span asp-validation-for="Age" class="text-danger"></span>
+                </div>
+                <div class="form-group mt-2">
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                </div>
+            </form>
+            <a class="btn btn-secondary text-light mt-2" asp-action="Index">Back to List</a>
+        </div>
+    </div>
+</div>

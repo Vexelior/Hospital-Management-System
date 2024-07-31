@@ -31,10 +31,16 @@
                                 <td>@patient.PatientId</td>
                                 <td>@patient.Name</td>
                                 <td>@patient.Age</td>
-                                <td>
-                                    <a asp-action="Edit" asp-route-id="@patient.PatientId">Edit</a> |
-                                    <a asp-action="Details" asp-route-id="@patient.PatientId">Details</a> |
-                                    <a asp-action="Delete" asp-route-id="@patient.PatientId">Delete</a>
+                                <td class="text-end">
+                                    <a class="me-2" title="Edit" asp-action="Edit" asp-route-id="@patient.PatientId">
+                                        <i class="fas fa-edit text-warning"></i>
+                                    </a>
+                                    <a class="me-2" title="Details" asp-action="Details" asp-route-id="@patient.PatientId">
+                                        <i class="fas fa-info-circle text-primary"></i>
+                                    </a>
+                                    <a class="me-2" title="Delete" asp-action="Delete" asp-route-id="@patient.PatientId">
+                                        <i class="fas fa-trash text-danger"></i>
+                                    </a>
                                 </td>
                             </tr>
                         }

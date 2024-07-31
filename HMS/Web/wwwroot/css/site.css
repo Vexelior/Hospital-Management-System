@@ -22,13 +22,8 @@ body {
 }
 
 a {
-    color: black !important;
     text-decoration: none;
 }
-
-    a:hover {
-        color: #0056b3;
-    }
 
 .dropdown:hover .dropdown-menu {
     display: block;
