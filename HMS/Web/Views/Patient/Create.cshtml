@@ -1,0 +1,23 @@
+﻿@model Web.Models.ViewModels.PatientCreateViewModel
+
+<h1>Create Patient</h1>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <form asp-action="Create" asp-controller="Patient" asp-area="" method="POST">
+                <div class="form-group">
+                    <label asp-for="Name"></label>
+                    <input asp-for="Name" class="form-control" type="text" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Age"></label>
+                    <input asp-for="Age" class="form-control" type="number" />
+                    <span asp-validation-for="Age" class="text-danger"></span>
+                </div>
+                <button type="submit" class="btn btn-primary mt-2">Create</button>
+            </form>
+        </div>
+    </div>
+</div>

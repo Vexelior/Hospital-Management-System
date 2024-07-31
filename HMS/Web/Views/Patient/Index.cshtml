@@ -1,0 +1,36 @@
+﻿@model Web.Models.ViewModels.PatientIndexViewModel
+
+<h1>Patients</h1>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            @if (Model.Patients != null && Model.Patients.Count() > 0)
+            {
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Patient ID</th>
+                            <th>Name</th>
+                            <th>Age</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var patient in Model.Patients)
+                        {
+                            <tr>
+                                <td>@patient.PatientId</td>
+                                <td>@patient.Name</td>
+                                <td>@patient.Age</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <p>No patients found.</p>
+            }
+        </div>
+    </div>
+</div>
