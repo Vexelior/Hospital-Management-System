@@ -1,0 +1,50 @@
+﻿@model Web.Models.ViewModels.PatientIndexViewModel
+
+@{
+    ViewBag.Title = "Patients";
+}
+
+<h1>Patients</h1>
+
+<p>
+    <a class="btn btn-secondary text-light" asp-action="Create">Create New Patient</a>
+</p>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            @if (Model.Patients != null && Model.Patients.Count() > 0)
+            {
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Patient ID</th>
+                            <th>Name</th>
+                            <th>Age</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var patient in Model.Patients)
+                        {
+                            <tr>
+                                <td>@patient.PatientId</td>
+                                <td>@patient.Name</td>
+                                <td>@patient.Age</td>
+                                <td>
+                                    <a asp-action="Edit" asp-route-id="@patient.PatientId">Edit</a> |
+                                    <a asp-action="Details" asp-route-id="@patient.PatientId">Details</a> |
+                                    <a asp-action="Delete" asp-route-id="@patient.PatientId">Delete</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <p>No patients found.</p>
+            }
+        </div>
+    </div>
+</div>

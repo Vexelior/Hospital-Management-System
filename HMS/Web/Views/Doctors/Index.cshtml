@@ -1,0 +1,77 @@
+﻿@model Web.Models.ViewModels.DoctorIndexViewModel
+
+@{
+    ViewBag.Title = "Doctors";
+}
+
+<h1>Doctors</h1>
+
+<p>
+    <a class="btn btn-secondary text-light" asp-action="Create">Create New Doctor</a>
+</p>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            @if (Model.Doctors != null && Model.Doctors.Count() > 0)
+            {
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Doctor ID</th>
+                            <th>Name</th>
+                            <th>Specialties</th>
+                            <th>Practices</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach (var doctor in Model.Doctors)
+                        {
+                            <tr>
+                                <td>@doctor.DoctorId</td>
+                                <td>@doctor.Name</td>
+                                <td>
+                                    @if (doctor.Specialties != null)
+                                    {
+                                        @foreach (var specialty in doctor.Specialties)
+                                        {
+                                            @specialty.Specialty.Name <br />
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <span>No specialties found.</span>
+                                    }
+                                </td>
+                                <td>
+                                    @if (doctor.Practices != null)
+                                    {
+                                        @foreach (var practice in doctor.Practices)
+                                        {
+                                            @practice.Practice.Name <br />
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <span>No practices found.</span>
+                                    }
+                                </td>
+                                <td>
+                                    <a asp-action="Edit" asp-route-id="@doctor.DoctorId">Edit</a> |
+                                    <a asp-action="Details" asp-route-id="@doctor.DoctorId">Details</a> |
+                                    <a asp-action="Delete" asp-route-id="@doctor.DoctorId">Delete</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <p>No doctors found.</p>
+            }
+        </div>
+    </div>
+</div>

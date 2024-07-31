@@ -1,0 +1,35 @@
+﻿@model Web.Models.ViewModels.DoctorCreateViewModel
+
+@{
+    ViewData["Title"] = "Create Doctor";
+}
+
+<h1>Create Doctor</h1>
+<hr />
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <form asp-action="Create" asp-asp-controller="Doctor" asp-area="" method="POST">
+                <div class="form-group">
+                    <label asp-for="Name" class="control-label"></label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Specialties" class="control-label"></label>
+                    <select asp-for="Specialties" class="form-control" asp-items="ViewBag.Specialties"></select>
+                    <span asp-validation-for="Specialties" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Practices" class="control-label"></label>
+                    <select asp-for="Practices" class="form-control" asp-items="ViewBag.Practices"></select>
+                    <span asp-validation-for="Practices" class="text-danger"></span>
+                </div>
+                <div class="form-group mt-2">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+            </form>
+            <a class="btn btn-secondary text-light mt-2" asp-action="Index" asp-controller="Doctors" asp-area="">Back to List</a>
+        </div>
+    </div>
+</div>
