@@ -4,13 +4,9 @@
     ViewBag.Title = "Patients";
 }
 
-<h1>Patients</h1>
-
-<p>
-    <a class="btn btn-secondary text-light" asp-action="Create">Create New Patient</a>
-</p>
-
 <div class="container">
+    <h1>Patients</h1>
+    <a class="btn btn-secondary text-light" asp-action="Create">Create New Patient</a>
     <div class="row">
         <div class="col-md-12">
             @if (Model.Patients != null && Model.Patients.Count() > 0)
@@ -18,7 +14,7 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>Patient ID</th>
+                            <th>ID</th>
                             <th>Name</th>
                             <th>Age</th>
                             <th></th>

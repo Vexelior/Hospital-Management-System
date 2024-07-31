@@ -25,6 +25,8 @@ builder.Services.AddScoped<DoctorService>();
 builder.Services.AddScoped<IDoctorRepository, DoctorRepository>();
 builder.Services.AddScoped<ISpecialtyRepository, SpecialtyRepository>();
 builder.Services.AddScoped<IPracticeRepository, PracticeRepository>();
+builder.Services.AddScoped<SpecialtyService>();
+builder.Services.AddScoped<ISpecialtyRepository, SpecialtyRepository>();
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddControllersWithViews();

@@ -1,0 +1,43 @@
+﻿@model IEnumerable<Core.Entities.Specialty>
+
+@{
+    ViewBag.Title = "Specialties";
+}
+
+<div class="container">
+    <h1>Specialties</h1>
+    <a class="btn btn-secondary text-light" asp-action="Create">Create New Specialty</a>
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var specialty in Model)
+                    {
+                        <tr>
+                            <td>@specialty.Id</td>
+                            <td>@specialty.Name</td>
+                            <td class="text-end">
+                                <a class="me-2" title="Edit" asp-action="Edit" asp-route-id="@specialty.Id">
+                                    <i class="fas fa-edit text-warning"></i>
+                                </a>
+                                <a class="me-2" title="Details" asp-action="Details" asp-route-id="@specialty.Id">
+                                    <i class="fas fa-info-circle text-primary"></i>
+                                </a>
+                                <a class="me-2" title="Delete" asp-action="Delete" asp-route-id="@specialty.Id">
+                                    <i class="fas fa-trash text-danger"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
