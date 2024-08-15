@@ -17,6 +17,7 @@ namespace Infrastructure.Data
         public DbSet<DoctorSpecialty> DoctorSpecialties { get; set; }
         public DbSet<Practice> Practices { get; set; }
         public DbSet<DoctorPractice> DoctorPractices { get; set; }
+        public DbSet<Provider> Providers { get; set; }
 
         public HospitalContext(DbContextOptions<HospitalContext> options) : base(options) { }
 
