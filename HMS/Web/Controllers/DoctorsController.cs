@@ -8,10 +8,14 @@ namespace Web.Controllers
     public class DoctorsController : Controller
     {
         private readonly DoctorService _doctorService;
+        private readonly SpecialtyService _specialtyService;
+        private readonly PracticeService _practiceService;
 
-        public DoctorsController(DoctorService doctorService)
+        public DoctorsController(DoctorService doctorService, SpecialtyService specialtyService, PracticeService practiceService)
         {
             _doctorService = doctorService;
+            _specialtyService = specialtyService;
+            _practiceService = practiceService;
         }
 
         public async Task<IActionResult> Index()
@@ -34,12 +38,15 @@ namespace Web.Controllers
             return View(doctor);
         }
 
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
+            var specialties = await _specialtyService.GetAllSpecialtiesAsync();
+            var practices = await _practiceService.GetAllPracticesAsync();
+
             DoctorCreateViewModel model = new()
             {
-                Specialties = [],
-                Practices = []
+                Specialties = specialties,
+                Practices = practices
             };
 
             return View(model);

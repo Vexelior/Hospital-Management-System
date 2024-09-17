@@ -5,10 +5,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Application.Interfaces;
 
 namespace Application.Services
 {
-    public class DoctorService
+    public class DoctorService : IDoctorService
     {
         private readonly IDoctorRepository _doctorRepository;
 

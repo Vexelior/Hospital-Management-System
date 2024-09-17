@@ -1,4 +1,5 @@
-﻿using Core.Entities;
+﻿using Application.Interfaces;
+using Core.Entities;
 using Core.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Application.Services
 {
-    public class SpecialtyService
+    public class SpecialtyService : ISpecialtyService
     {
         private readonly ISpecialtyRepository _specialtyRepository;
 

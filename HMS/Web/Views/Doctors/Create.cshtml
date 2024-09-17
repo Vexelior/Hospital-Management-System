@@ -17,12 +17,22 @@
                 </div>
                 <div class="form-group">
                     <label asp-for="Specialties" class="control-label"></label>
-                    <select asp-for="Specialties" class="form-control" asp-items="ViewBag.Specialties"></select>
+                    <select asp-for="Specialties" class="form-control">
+                        @foreach (var specialty in Model.Specialties)
+                        {
+                            <option value="@specialty.Id">@specialty.Name</option>
+                        }
+                    </select>
                     <span asp-validation-for="Specialties" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="Practices" class="control-label"></label>
-                    <select asp-for="Practices" class="form-control" asp-items="ViewBag.Practices"></select>
+                    <select asp-for="Practices" class="form-control">
+                        @foreach (var practice in Model.Practices)
+                        {
+                            <option value="@practice.Id">@practice.Name</option>
+                        }
+                    </select>
                     <span asp-validation-for="Practices" class="text-danger"></span>
                 </div>
                 <div class="form-group mt-2">
