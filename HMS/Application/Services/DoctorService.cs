@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Application.DTOs;
 using Application.Interfaces;
 
 namespace Application.Services
@@ -18,38 +19,42 @@ namespace Application.Services
             _doctorRepository = doctorRepository;
         }
 
-        public async Task<Doctor> GetDoctorByIdAsync(int id)
+        public async Task<DoctorDto> GetDoctorByIdAsync(int id)
         {
-            return await _doctorRepository.GetByIdAsync(id);
+            var doctor =  await _doctorRepository.GetById(id);
+            return new DoctorDto { Id = doctor.Id, Name = doctor.Name, Practices = doctor.Practices, Specialties = doctor.Specialties };
         }
 
-        public async Task<IEnumerable<Doctor>> GetAllDoctorsAsync()
+        public async Task<IEnumerable<DoctorDto>> GetAllDoctorsAsync()
         {
-            return await _doctorRepository.ListAllAsync();
+            var doctors = await _doctorRepository.GetAll();
+            return doctors.Select(d => new DoctorDto { Id = d.Id, Name = d.Name, Practices = d.Practices, Specialties = d.Specialties });
         }
 
-        public async Task<Doctor> AddDoctorAsync(Doctor doctor)
+        public async Task<DoctorDto> AddDoctorAsync(DoctorDto doctorDto)
         {
-            return await _doctorRepository.AddAsync(doctor);
+            var newDoctor = new Doctor { Name = doctorDto.Name, Practices = doctorDto.Practices, Specialties = doctorDto.Specialties };
+            await _doctorRepository.Add(newDoctor);
+            return new DoctorDto { Id = newDoctor.Id, Name = newDoctor.Name, Practices = newDoctor.Practices, Specialties = newDoctor.Specialties };
         }
 
-        public async Task UpdateDoctorAsync(Doctor doctor)
+        public async Task UpdateDoctorAsync(DoctorDto doctorDto)
         {
-            await _doctorRepository.UpdateAsync(doctor);
+            var doctor = new Doctor
+            {
+                Id = doctorDto.Id, Name = doctorDto.Name, Specialties = doctorDto.Specialties,
+                Practices = doctorDto.Practices
+            };
+            await _doctorRepository.Update(doctor);
         }
 
         public async Task DeleteDoctorAsync(int id)
         {
-            var doctor = await _doctorRepository.GetByIdAsync(id);
+            var doctor = await _doctorRepository.GetById(id);
             if (doctor != null)
             {
-                await _doctorRepository.DeleteAsync(doctor);
+                await _doctorRepository.Delete(doctor.Id);
             }
-        }
-
-        public async Task<IEnumerable<Doctor>> GetDoctorsWithSpecialtiesAndPracticesAsync()
-        {
-            return await _doctorRepository.GetDoctorsWithSpecialtiesAndPracticesAsync();
         }
     }
 }

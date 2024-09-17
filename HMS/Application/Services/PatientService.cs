@@ -22,13 +22,13 @@ namespace Application.Services
         public async Task<PatientDto> GetPatientByIdAsync(int id)
         {
             var patient = await _patientRepository.GetPatientByIdAsync(id);
-            return new PatientDto { PatientId = patient.Id, Name = patient.Name, Age = patient.Age };
+            return new PatientDto { Id = patient.Id, Name = patient.Name, Age = patient.Age };
         }
 
         public async Task<IEnumerable<PatientDto>> GetAllPatientsAsync()
         {
             var patients = await _patientRepository.GetAllPatientsAsync();
-            return patients.Select(p => new PatientDto { PatientId = p.Id, Name = p.Name, Age = p.Age });
+            return patients.Select(p => new PatientDto { Id = p.Id, Name = p.Name, Age = p.Age });
         }
 
         public async Task AddPatientAsync(PatientDto patientDto)
@@ -39,7 +39,7 @@ namespace Application.Services
 
         public async Task UpdatePatientAsync(PatientDto patientDto)
         {
-            var patient = new Patient { Id = patientDto.PatientId, Name = patientDto.Name, Age = patientDto.Age };
+            var patient = new Patient { Id = patientDto.Id, Name = patientDto.Name, Age = patientDto.Age };
             await _patientRepository.UpdatePatientAsync(patient);
         }
 

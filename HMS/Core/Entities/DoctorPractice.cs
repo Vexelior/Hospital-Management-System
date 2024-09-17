@@ -11,8 +11,8 @@ namespace Core.Entities
     {
         [Key]
         public int DoctorId { get; set; }
-        public Doctor? Doctor { get; set; }
+        public Doctor Doctor { get; set; }
         public int PracticeId { get; set; }
-        public Practice? Practice { get; set; }
+        public Practice Practice { get; set; }
     }
 }

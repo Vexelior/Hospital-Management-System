@@ -1,13 +1,19 @@
 ﻿using Application.DTOs;
 using Application.Interfaces;
+using Application.Services;
 using Microsoft.AspNetCore.Mvc;
 using Web.Models.ViewModels;
 
 namespace Web.Controllers
 {
-    public class PatientsController(IPatientService patientService) : Controller
+    public class PatientsController : Controller
     {
-        private readonly IPatientService _patientService = patientService;
+        private readonly PatientService _patientService;
+
+        public PatientsController(PatientService patientService)
+        {
+            _patientService = patientService;
+        }
 
         public async Task<IActionResult> Index()
         {
@@ -33,7 +39,7 @@ namespace Web.Controllers
                 await _patientService.AddPatientAsync(patientDto);
                 return RedirectToAction(nameof(Index));
             }
-            return View(patientDto);
+            return View();
         }
 
         public async Task<IActionResult> Edit(int id)
@@ -50,7 +56,7 @@ namespace Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, PatientDto patientDto)
         {
-            if (id != patientDto.PatientId)
+            if (id != patientDto.Id)
             {
                 return NotFound();
             }

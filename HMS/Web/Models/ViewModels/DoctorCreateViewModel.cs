@@ -4,8 +4,8 @@ namespace Web.Models.ViewModels
 {
     public class DoctorCreateViewModel
     {
-        public string? Name { get; set; }
-        public IEnumerable<Specialty> Specialties { get; set; } = new List<Specialty>();
-        public IEnumerable<Practice> Practices { get; set; } = new List<Practice>();
+        public string Name { get; init; }
+        public IEnumerable<Specialty> Specialties { get; init; } = new List<Specialty>();
+        public IEnumerable<Practice> Practices { get; init; } = new List<Practice>();
     }
 }

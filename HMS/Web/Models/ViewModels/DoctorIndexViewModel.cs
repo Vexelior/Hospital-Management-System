@@ -1,9 +1,10 @@
-﻿using Core.Entities;
+﻿using Application.DTOs;
+using Core.Entities;
 
 namespace Web.Models.ViewModels
 {
     public class DoctorIndexViewModel
     {
-        public IEnumerable<Doctor>? Doctors { get; set; }
+        public IEnumerable<DoctorDto> Doctors { get; init; }
     }
 }

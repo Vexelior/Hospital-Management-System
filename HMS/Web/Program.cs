@@ -20,23 +20,18 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
 builder.Services.AddScoped<IPatientRepository, PatientRepository>();
-builder.Services.AddScoped<IPatientService, PatientService>();
 builder.Services.AddScoped<PatientService>();
 
 builder.Services.AddScoped<IDoctorRepository, DoctorRepository>();
-builder.Services.AddScoped<IDoctorService, DoctorService>();
 builder.Services.AddScoped<DoctorService>();
 
 builder.Services.AddScoped<ISpecialtyRepository, SpecialtyRepository>();
-builder.Services.AddScoped<ISpecialtyService, SpecialtyService>();
 builder.Services.AddScoped<SpecialtyService>();
 
 builder.Services.AddScoped<IProviderRepository, ProviderRepository>();
-builder.Services.AddScoped<IProviderService, ProviderService>();
 builder.Services.AddScoped<ProviderService>();
 
 builder.Services.AddScoped<IPracticeRepository, PracticeRepository>();
-builder.Services.AddScoped<IPracticeService, PracticeService>();
 builder.Services.AddScoped<PracticeService>();
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();

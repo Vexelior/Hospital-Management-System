@@ -7,8 +7,12 @@ using System.Threading.Tasks;
 
 namespace Core.Interfaces
 {
-    public interface IDoctorRepository : IRepository<Doctor>
+    public interface IDoctorRepository
     {
-        Task<IEnumerable<Doctor>> GetDoctorsWithSpecialtiesAndPracticesAsync();
+        Task<Doctor> GetById(int id);
+        Task<IEnumerable<Doctor>> GetAll();
+        Task Add(Doctor patient);
+        Task Update(Doctor patient);
+        Task Delete(int id);
     }
 }

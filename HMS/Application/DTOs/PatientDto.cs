@@ -8,8 +8,8 @@ namespace Application.DTOs
 {
     public class PatientDto
     {
-        public int PatientId { get; set; }
-        public string? Name { get; set; }
-        public int Age { get; set; }
+        public int Id { get; init; }
+        public string Name { get; init; }
+        public int Age { get; init; }
     }
 }

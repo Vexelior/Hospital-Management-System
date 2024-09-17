@@ -1,4 +1,5 @@
-﻿using Application.Services;
+﻿using Application.DTOs;
+using Application.Services;
 using Core.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Web.Models.ViewModels;
@@ -22,7 +23,7 @@ namespace Web.Controllers
         {
             DoctorIndexViewModel model = new()
             {
-                Doctors = await _doctorService.GetDoctorsWithSpecialtiesAndPracticesAsync()
+                Doctors = await _doctorService.GetAllDoctorsAsync()
             };
 
             return View(model);
@@ -54,14 +55,15 @@ namespace Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Doctor doctor)
+        public async Task<IActionResult> Create(DoctorDto doctor)
         {
             if (ModelState.IsValid)
             {
                 await _doctorService.AddDoctorAsync(doctor);
                 return RedirectToAction(nameof(Index));
             }
-            return View(doctor);
+
+            return View();
         }
 
         public async Task<IActionResult> Edit(int id)
@@ -85,7 +87,7 @@ namespace Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, Doctor doctor)
+        public async Task<IActionResult> Edit(int id, DoctorDto doctor)
         {
             if (id != doctor.Id)
             {
@@ -97,7 +99,7 @@ namespace Web.Controllers
                 await _doctorService.UpdateDoctorAsync(doctor);
                 return RedirectToAction(nameof(Index));
             }
-            return View(doctor);
+            return View();
         }
 
         public async Task<IActionResult> Delete(int id)

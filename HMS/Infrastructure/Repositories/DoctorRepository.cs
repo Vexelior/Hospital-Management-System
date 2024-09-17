@@ -14,14 +14,42 @@ namespace Infrastructure.Repositories
     {
         public DoctorRepository(HospitalContext context) : base(context) { }
 
-        public async Task<IEnumerable<Doctor>> GetDoctorsWithSpecialtiesAndPracticesAsync()
+        public async Task<Doctor> GetById(int id)
         {
             return await _context.Doctors
-                                 .Include(d => d.Specialties)
-                                 .ThenInclude(ds => ds.Specialty)
-                                 .Include(d => d.Practices)
-                                 .ThenInclude(dp => dp.Practice)
-                                 .ToListAsync();
+                .Include(d => d.Practices)
+                .Include(d => d.Specialties)
+                .FirstOrDefaultAsync(d => d.Id == id);
+        }
+
+        public async Task<IEnumerable<Doctor>> GetAll()
+        {
+            return await _context.Doctors
+                .Include(d => d.Practices)
+                .Include(d => d.Specialties)
+                .ToListAsync();
+        }
+
+        public async Task Add(Doctor doctor)
+        {
+            await _context.Doctors.AddAsync(doctor);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task Update(Doctor doctor)
+        {
+            _context.Doctors.Update(doctor);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task Delete(int id)
+        {
+            var doctor = await GetById(id);
+            if (doctor != null)
+            {
+                _context.Doctors.Remove(doctor);
+                await _context.SaveChangesAsync();
+            }
         }
     }
 }
