@@ -1813,3 +1813,58 @@ section,
         #account-registration-form button[type=submit]:hover {
             background: color-mix(in srgb, var(--accent-color), transparent 20%);
         }
+
+/*--------------------------------------------------------------
+# Account forgot password form
+--------------------------------------------------------------*/
+#account-forgot-password-form {
+    background-color: var(--surface-color);
+    padding: 30px;
+    border-radius: 5px;
+    box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 3rem;
+}
+
+    #account-forgot-password-form h2 {
+        font-size: 24px;
+        font-weight: 700;
+        margin-bottom: 20px;
+    }
+
+    #account-forgot-password-form input[type=text],
+    #account-forgot-password-form input[type=password] {
+        font-size: 14px;
+        padding: 10px 15px;
+        box-shadow: none;
+        border-radius: 0;
+        color: var(--default-color);
+        background-color: color-mix(in srgb, var(--background-color), transparent 50%);
+        border-color: color-mix(in srgb, var(--default-color), transparent 80%);
+    }
+
+        #account-forgot-password-form input[type=text]:focus,
+        #account-forgot-password-form input[type=password]:focus {
+            border-color: var(--accent-color);
+        }
+
+        #account-forgot-password-form input[type=text]::placeholder,
+        #account-forgot-password-form input[type=password]::placeholder {
+            color: color-mix(in srgb, var(--default-color), transparent 70%);
+        }
+
+    #account-forgot-password-form button[type=submit] {
+        color: var(--contrast-color);
+        background: var(--accent-color);
+        border: 0;
+        padding: 10px 36px;
+        transition: 0.4s;
+        border-radius: 50px;
+        margin-bottom: 1rem;
+    }
+
+        #account-forgot-password-form button[type=submit]:hover {
+            background: color-mix(in srgb, var(--accent-color), transparent 20%);
+        }
