@@ -1,7 +1,7 @@
 ﻿using Application.DTOs;
 using Core.Entities;
 
-namespace Web.Models.ViewModels
+namespace Web.Models.ViewModels.Patient
 {
     public class PatientIndexViewModel
     {

@@ -32,7 +32,11 @@ namespace Infrastructure.Repositories
 
         public async Task UpdatePracticeAsync(Practice practice)
         {
-            _context.Practices.Update(practice);
+            var practiceToUpdate = await _context.Practices.FindAsync(practice.Id);
+            if (practiceToUpdate == null)
+            {
+                throw new Exception("Practice not found");
+            }
             await _context.SaveChangesAsync();
         }
 

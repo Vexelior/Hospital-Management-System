@@ -39,7 +39,7 @@ namespace Application.Services
 
         public async Task UpdatePracticeAsync(PracticeDto practiceDto)
         {
-            var practice = new Practice() { Name = practiceDto.Name, Location = practiceDto.Location };
+            var practice = await _practiceRepository.GetPracticeByIdAsync(practiceDto.Id);
             await _practiceRepository.UpdateAsync(practice);
         }
 

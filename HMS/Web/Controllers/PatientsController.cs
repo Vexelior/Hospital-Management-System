@@ -3,6 +3,7 @@ using Application.Interfaces;
 using Application.Services;
 using Microsoft.AspNetCore.Mvc;
 using Web.Models.ViewModels;
+using Web.Models.ViewModels.Patient;
 
 namespace Web.Controllers
 {

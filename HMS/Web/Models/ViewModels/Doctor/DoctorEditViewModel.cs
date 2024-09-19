@@ -1,6 +1,6 @@
 ﻿using Core.Entities;
 
-namespace Web.Models.ViewModels
+namespace Web.Models.ViewModels.Doctor
 {
     public class DoctorEditViewModel
     {

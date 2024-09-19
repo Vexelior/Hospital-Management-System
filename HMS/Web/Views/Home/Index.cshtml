@@ -1,43 +1,397 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Home";
 }
 
-<div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <h1>Hospital Management System</h1>
-            <p>Welcome to the Hospital Management System. This system is designed to help manage the day-to-day operations of a hospital. It allows you to manage patients, doctors, and appointments. You can also view reports and statistics to help you make informed decisions.</p>
-            <p>Use the navigation bar at the top of the page to access different sections of the system. You can add, edit, and delete records as needed. You can also search for specific records using the search bar.</p>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-6">
-            <h2>Features</h2>
-            <ul>
-                <li>Manage Patients</li>
-                <li>Manage Doctors</li>
-                <li>Manage Appointments</li>
-                <li>View Reports and Statistics</li>
-            </ul>
-        </div>
-        <div class="col-md-6">
-            <h2>Technologies</h2>
-            <ul>
-                <li>ASP.NET Core</li>
-                <li>Entity Framework Core</li>
-                <li>Bootstrap</li>
-            </ul>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <h2>Repository</h2>
-            <p>The source code for this project is available on GitHub. You can view the code, contribute, and report issues on the GitHub repository.</p>
+<!-- Hero Section -->
+<section id="hero" class="hero section light-background">
+    <img src="assets/img/hero-bg.jpg" alt="" data-aos="fade-in">
+    <div class="container position-relative">
+        <div class="welcome position-relative" data-aos="fade-down" data-aos-delay="100">
+            <h2>WELCOME TO HMS</h2>
             <p>
-                <a href="https://www.github.com/Vexelior/Hospital-Management-System" title="GitHub Repository" target="_blank">
-                    <i class="fab fa-github"></i> GitHub Repository
-                </a>
+                Creating a healthier world, one patient at a time.
             </p>
         </div>
+        <div class="content row gy-4">
+            <div class="col-lg-4 d-flex align-items-stretch">
+                <div class="why-box" data-aos="zoom-out" data-aos-delay="200">
+                    <h3>Why Choose HMS?</h3>
+                    <p>
+                        Here at HMS, we are dedicated to providing the best possible service and care to our patients. When you choose HMS, you are choosing a team of professionals who are committed to providing the best possible care for you and your family.
+                    </p>
+                    <div class="text-center">
+                        <a href="#about" class="more-btn"><span>Learn More</span> <i class="bi bi-chevron-right"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-8 d-flex align-items-stretch">
+                <div class="d-flex flex-column justify-content-center">
+                    <div class="row gy-4">
+                        <div class="col-xl-4 d-flex align-items-stretch">
+                            <div class="icon-box" data-aos="zoom-out" data-aos-delay="300">
+                                <i class="bi bi-clipboard-data"></i>
+                                <h4>Quality Care</h4>
+                                <p>
+                                    Dedicated to providing the best possible care for our patients. Our team of professionals is committed to providing the best possible care for you and your family.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-xl-4 d-flex align-items-stretch">
+                            <div class="icon-box" data-aos="zoom-out" data-aos-delay="400">
+                                <i class="bi bi-gem"></i>
+                                <h4>State-of-the-Art Facilities</h4>
+                                <p>
+                                    We offer a wide range of services, including primary care, specialty care, and urgent care. Our goal is to provide high-quality, compassionate care to all of our patients.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-xl-4 d-flex align-items-stretch">
+                            <div class="icon-box" data-aos="zoom-out" data-aos-delay="500">
+                                <i class="bi bi-inboxes"></i>
+                                <h4>Experienced Professionals</h4>
+                                <p>
+                                    Our team of professionals is committed to providing the best possible care for you and your family. We offer a wide range of services, including primary care, specialty care, and urgent care.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
+</section>
+
+<!-- About Section -->
+<section id="about" class="about section">
+    <div class="container">
+        <div class="row gy-4 gx-5">
+            <div class="col-lg-6 position-relative align-self-start" data-aos="fade-up" data-aos-delay="200">
+                <img src="assets/img/about.jpg" class="img-fluid" alt="">
+                <a href="https://www.youtube.com/watch?v=Y7f98aduVJ8" class="glightbox pulsating-play-btn"></a>
+            </div>
+            <div class="col-lg-6 content" data-aos="fade-up" data-aos-delay="100">
+                <h3>About Us</h3>
+                <p>HMS is a leading healthcare provider in the United States. We are dedicated to providing the best possible care for our patients. Our team of professionals is committed to providing the best possible care for you and your family. We offer a wide range of services, including primary care, specialty care, and urgent care. Our goal is to provide high-quality, compassionate care to all of our patients.</p>
+                <p>
+                    Our state-of-the-art facilities are equipped with the latest technology and staffed by experienced professionals. We are committed to providing the best possible care for our patients, and we are dedicated to creating a healthier world, one patient at a time.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Faq Section -->
+<section id="faq" class="faq section light-background">
+    <div class="container section-title" data-aos="fade-up">
+        <h2>Frequently Asked Questions</h2>
+    </div>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10" data-aos="fade-up" data-aos-delay="100">
+                <div class="faq-container">
+                    <div class="faq-item">
+                        <h3>What is a Hospital Management System (HMS)?</h3>
+                        <div class="faq-content">
+                            <p>A Hospital Management System (HMS) is a software platform that helps hospitals and healthcare facilities manage various aspects of their operations, including patient registration, appointment scheduling, billing, medical records, staff management, inventory, and more. It streamlines processes, improves efficiency, and enhances patient care.</p>
+                        </div>
+                        <i class="faq-toggle bi bi-chevron-right"></i>
+                    </div>
+                    <div class="faq-item">
+                        <h3>How does an HMS improve patient care?</h3>
+                        <div class="faq-content">
+                            <p>An HMS enhances patient care by providing quick access to accurate patient records, reducing errors in treatment plans, facilitating easier appointment scheduling, and improving communication between healthcare providers. This results in more informed decision-making and better patient outcomes.</p>
+                        </div>
+                        <i class="faq-toggle bi bi-chevron-right"></i>
+                    </div>
+                    <div class="faq-item">
+                        <h3>Is the Hospital Management System secure?</h3>
+                        <div class="faq-content">
+                            <p>Yes, the HMS is designed with robust security measures to protect patient data. It includes features like data encryption, access control, audit logs, and compliance with healthcare regulations such as HIPAA and GDPR. Only authorized personnel have access to sensitive information.</p>
+                        </div>
+                        <i class="faq-toggle bi bi-chevron-right"></i>
+                    </div>
+                    <div class="faq-item">
+                        <h3>Can the HMS be accessed remotely?</h3>
+                        <div class="faq-content">
+                            <p>Yes, the HMS can be accessed remotely by authorized users. It includes secure login portals for patients, doctors, and staff, allowing them to access relevant information and perform necessary actions from any location with internet connectivity.</p>
+                        </div>
+                        <i class="faq-toggle bi bi-chevron-right"></i>
+                    </div>
+                    <div class="faq-item">
+                        <h3>How does the HMS handle emergency cases?</h3>
+                        <div class="faq-content">
+                            <p>The HMS is equipped to handle emergency cases by allowing priority patient registration and admission. It can notify relevant healthcare providers and allocate resources such as beds, staff, and operation rooms for immediate treatment.</p>
+                        </div>
+                        <i class="faq-toggle bi bi-chevron-right"></i>
+                    </div>
+                    <div class="faq-item">
+                        <h3>Can I access my medical records online?</h3>
+                        <div class="faq-content">
+                            <p>Yes, registered patients can access their electronic medical records (EMR) through the patient portal. Log in with your credentials, and you can view your medical history, lab reports, prescriptions, and treatment plans.</p>
+                        </div>
+                        <i class="faq-toggle bi bi-chevron-right"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Testimonials Section -->
+<section id="testimonials" class="testimonials section">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-5 info" data-aos="fade-up" data-aos-delay="100">
+                <h3>Testimonials</h3>
+            </div>
+            <div class="col-lg-7" data-aos="fade-up" data-aos-delay="200">
+                <div class="swiper init-swiper">
+                    <script type="application/json" class="swiper-config">
+                        {
+                          "loop": true,
+                          "speed": 600,
+                          "autoplay": {
+                            "delay": 5000
+                          },
+                          "slidesPerView": "auto",
+                          "pagination": {
+                            "el": ".swiper-pagination",
+                            "type": "bullets",
+                            "clickable": true
+                          }
+                        }
+                    </script>
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide">
+                            <div class="testimonial-item">
+                                <div class="d-flex">
+                                    <img src="assets/img/testimonials/testimonials-1.jpg" class="testimonial-img flex-shrink-0" alt="">
+                                    <div>
+                                        <h3>John Smith</h3>
+                                        <h4>Hospital Administrator</h4>
+                                        <div class="stars">
+                                            <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p>
+                                    <i class="bi bi-quote quote-icon-left"></i>
+                                    <span>Implementing this Hospital Management System has been a game-changer for our facility. Managing patient records, billing, and scheduling appointments is now more streamlined than ever. Our administrative workload has reduced significantly, allowing us to focus more on improving patient care.</span>
+                                    <i class="bi bi-quote quote-icon-right"></i>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="testimonial-item">
+                                <div class="d-flex">
+                                    <img src="assets/img/testimonials/testimonials-2.jpg" class="testimonial-img flex-shrink-0" alt="">
+                                    <div>
+                                        <h3>Sara Thompson</h3>
+                                        <h4>Director Of Operations</h4>
+                                        <div class="stars">
+                                            <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p>
+                                    <i class="bi bi-quote quote-icon-left"></i>
+                                    <span>The HMS has brought our hospital operations into the digital age. With centralized data management, we can easily access patient information, monitor inventory, and generate detailed reports in just a few clicks. It has truly enhanced our efficiency and decision-making processes.</span>
+                                    <i class="bi bi-quote quote-icon-right"></i>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="testimonial-item">
+                                <div class="d-flex">
+                                    <img src="assets/img/testimonials/testimonials-3.jpg" class="testimonial-img flex-shrink-0" alt="">
+                                    <div>
+                                        <h3>Anna Wilson</h3>
+                                        <h4>Patient</h4>
+                                        <div class="stars">
+                                            <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p>
+                                    <i class="bi bi-quote quote-icon-left"></i>
+                                    <span>The online patient portal is so convenient! I was able to book my appointment, access my lab results, and view my prescriptions all from my phone. It saves me so much time, and I love that I can keep track of my health records in one place.</span>
+                                    <i class="bi bi-quote quote-icon-right"></i>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="testimonial-item">
+                                <div class="d-flex">
+                                    <img src="assets/img/testimonials/testimonials-4.jpg" class="testimonial-img flex-shrink-0" alt="">
+                                    <div>
+                                        <h3>David Lee</h3>
+                                        <h4>Patient</h4>
+                                        <div class="stars">
+                                            <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p>
+                                    <i class="bi bi-quote quote-icon-left"></i>
+                                    <span>Navigating the healthcare process used to be overwhelming, but this system made it so much easier. From scheduling appointments to paying bills online, everything was clear and simple. I felt more in control of my healthcare journey.</span>
+                                    <i class="bi bi-quote quote-icon-right"></i>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="testimonial-item">
+                                <div class="d-flex">
+                                    <img src="assets/img/testimonials/testimonials-5.jpg" class="testimonial-img flex-shrink-0" alt="">
+                                    <div>
+                                        <h3>James Carter</h3>
+                                        <h4>IT Support Specialist</h4>
+                                        <div class="stars">
+                                            <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p>
+                                    <i class="bi bi-quote quote-icon-left"></i>
+                                    <span>As part of the IT team, I can say that the HMS is built with excellent security and data integrity features. It's easy to manage user roles, ensure data privacy, and integrate with other healthcare systems. It is a reliable platform that supports the hospital's complex needs.</span>
+                                    <i class="bi bi-quote quote-icon-right"></i>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-pagination"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Gallery Section -->
+<section id="gallery" class="gallery section light-background">
+    <div class="container section-title" data-aos="fade-up">
+        <h2>Gallery</h2>
+    </div>
+    <div class="container-fluid" data-aos="fade-up" data-aos-delay="100">
+        <div class="row g-0">
+            <div class="col-lg-3 col-md-4">
+                <div class="gallery-item">
+                    <a href="assets/img/gallery/gallery-1.jpg" class="glightbox" data-gallery="images-gallery">
+                        <img src="assets/img/gallery/gallery-1.jpg" alt="" class="img-fluid">
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-4">
+                <div class="gallery-item">
+                    <a href="assets/img/gallery/gallery-2.jpg" class="glightbox" data-gallery="images-gallery">
+                        <img src="assets/img/gallery/gallery-2.jpg" alt="" class="img-fluid">
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-4">
+                <div class="gallery-item">
+                    <a href="assets/img/gallery/gallery-3.jpg" class="glightbox" data-gallery="images-gallery">
+                        <img src="assets/img/gallery/gallery-3.jpg" alt="" class="img-fluid">
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-4">
+                <div class="gallery-item">
+                    <a href="assets/img/gallery/gallery-4.jpg" class="glightbox" data-gallery="images-gallery">
+                        <img src="assets/img/gallery/gallery-4.jpg" alt="" class="img-fluid">
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-4">
+                <div class="gallery-item">
+                    <a href="assets/img/gallery/gallery-5.jpg" class="glightbox" data-gallery="images-gallery">
+                        <img src="assets/img/gallery/gallery-5.jpg" alt="" class="img-fluid">
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-4">
+                <div class="gallery-item">
+                    <a href="assets/img/gallery/gallery-6.jpg" class="glightbox" data-gallery="images-gallery">
+                        <img src="assets/img/gallery/gallery-6.jpg" alt="" class="img-fluid">
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-4">
+                <div class="gallery-item">
+                    <a href="assets/img/gallery/gallery-7.jpg" class="glightbox" data-gallery="images-gallery">
+                        <img src="assets/img/gallery/gallery-7.jpg" alt="" class="img-fluid">
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-4">
+                <div class="gallery-item">
+                    <a href="assets/img/gallery/gallery-8.jpg" class="glightbox" data-gallery="images-gallery">
+                        <img src="assets/img/gallery/gallery-8.jpg" alt="" class="img-fluid">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Section -->
+<section id="contact" class="contact section">
+    <div class="container section-title" data-aos="fade-up">
+        <h2>Contact</h2>
+        <p>
+            Have questions or need to get in touch? Fill out the form below, and we will get back to you as soon as possible.
+        </p>
+    </div>
+    <div class="container" data-aos="fade-up" data-aos-delay="100">
+        <div class="row gy-4">
+            <div class="col-lg-4">
+                <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="300">
+                    <i class="bi bi-geo-alt flex-shrink-0"></i>
+                    <div>
+                        <h3>Location</h3>
+                        <p>A108 Adam Street, New York, NY 535022</p>
+                    </div>
+                </div>
+                <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="400">
+                    <i class="bi bi-telephone flex-shrink-0"></i>
+                    <div>
+                        <h3>Call Us</h3>
+                        <p>+1 5589 55488 55</p>
+                    </div>
+                </div>
+                <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="500">
+                    <i class="bi bi-envelope flex-shrink-0"></i>
+                    <div>
+                        <h3>Email Us</h3>
+                        <p>info@example.com</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-8">
+                <form action="forms/contact.php" method="post" class="php-email-form" data-aos="fade-up" data-aos-delay="200">
+                    <div class="row gy-4">
+                        <div class="col-md-6">
+                            <input type="text" name="name" class="form-control" placeholder="Your Name" required="">
+                        </div>
+
+                        <div class="col-md-6 ">
+                            <input type="email" class="form-control" name="email" placeholder="Your Email" required="">
+                        </div>
+
+                        <div class="col-md-12">
+                            <input type="text" class="form-control" name="subject" placeholder="Subject" required="">
+                        </div>
+
+                        <div class="col-md-12">
+                            <textarea class="form-control" name="message" rows="6" placeholder="Message" required=""></textarea>
+                        </div>
+                        <div class="col-md-12 text-center">
+                            <div class="loading">Loading</div>
+                            <div class="error-message"></div>
+                            <div class="sent-message">Your message has been sent. Thank you!</div>
+                            <button type="submit">Send Message</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>

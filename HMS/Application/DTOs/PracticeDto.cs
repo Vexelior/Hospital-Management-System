@@ -9,7 +9,7 @@ namespace Application.DTOs
     public class PracticeDto
     {
         public int Id { get; set; }
-        public string Name { get; init; }
-        public string Location { get; init; }
+        public string Name { get; set; }
+        public string Location { get; set; }
     }
 }

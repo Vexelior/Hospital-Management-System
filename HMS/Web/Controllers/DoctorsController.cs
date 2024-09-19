@@ -2,7 +2,7 @@
 using Application.Services;
 using Core.Entities;
 using Microsoft.AspNetCore.Mvc;
-using Web.Models.ViewModels;
+using Web.Models.ViewModels.Doctor;
 
 namespace Web.Controllers
 {

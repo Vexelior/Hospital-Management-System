@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Core.Entities;
 using Infrastructure.Data;
+using Exception = System.Exception;
 
 namespace Web.Controllers
 {
@@ -25,14 +26,14 @@ namespace Web.Controllers
         {
             var practiceDtos = await _practiceService.GetAllPracticesAsync();
             var practices = practiceDtos.Select(p => new Practice { Id = p.Id, Name = p.Name, Location = p.Location });
-            
+
             return View(practices);
         }
 
         public async Task<IActionResult> Details(int id)
         {
             var practiceDto = await _practiceService.GetPracticeByIdAsync(id);
-            
+
             if (practiceDto == null)
             {
                 return NotFound();
@@ -88,7 +89,10 @@ namespace Web.Controllers
 
             if (ModelState.IsValid)
             {
-                var practiceDto = new PracticeDto { Id = practice.Id, Name = practice.Name, Location = practice.Location };
+                var practiceDto = await _practiceService.GetPracticeByIdAsync(id);
+                practiceDto.Name = practice.Name;
+                practiceDto.Location = practice.Location;
+
                 await _practiceService.UpdatePracticeAsync(practiceDto);
 
                 return RedirectToAction(nameof(Index));
