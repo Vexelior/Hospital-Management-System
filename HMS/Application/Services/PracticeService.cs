@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Application.DTOs;
 using Application.Interfaces;
 using Core.Entities;
 using Core.Interfaces;
@@ -18,23 +19,27 @@ namespace Application.Services
             _practiceRepository = practiceRepository;
         }
 
-        public async Task<IEnumerable<Practice>> GetAllPracticesAsync()
+        public async Task<IEnumerable<PracticeDto>> GetAllPracticesAsync()
         {
-            return await _practiceRepository.ListAllAsync();
+            var practices = await _practiceRepository.GetAllPracticesAsync();
+            return practices.Select(p => new PracticeDto { Id = p.Id, Name = p.Name, Location = p.Location });
         }
 
-        public async Task<Practice> GetPracticeByIdAsync(int id)
+        public async Task<PracticeDto> GetPracticeByIdAsync(int id)
         {
-            return await _practiceRepository.GetByIdAsync(id);
+            var practice = await _practiceRepository.GetPracticeByIdAsync(id);
+            return new PracticeDto { Id = practice.Id, Name = practice.Name, Location = practice.Location };
         }
 
-        public async Task AddPracticeAsync(Practice practice)
+        public async Task AddPracticeAsync(PracticeDto practiceDto)
         {
+            var practice = new Practice() { Name = practiceDto.Name, Location = practiceDto.Location };
             await _practiceRepository.AddAsync(practice);
         }
 
-        public async Task UpdatePracticeAsync(Practice practice)
+        public async Task UpdatePracticeAsync(PracticeDto practiceDto)
         {
+            var practice = new Practice() { Name = practiceDto.Name, Location = practiceDto.Location };
             await _practiceRepository.UpdateAsync(practice);
         }
 

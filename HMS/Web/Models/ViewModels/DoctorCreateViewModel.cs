@@ -1,4 +1,5 @@
-﻿using Core.Entities;
+﻿using Application.DTOs;
+using Core.Entities;
 
 namespace Web.Models.ViewModels
 {
@@ -6,6 +7,6 @@ namespace Web.Models.ViewModels
     {
         public string Name { get; init; }
         public IEnumerable<Specialty> Specialties { get; init; } = new List<Specialty>();
-        public IEnumerable<Practice> Practices { get; init; } = new List<Practice>();
+        public IEnumerable<PracticeDto> Practices { get; init; } = new List<PracticeDto>();
     }
 }

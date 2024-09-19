@@ -10,9 +10,11 @@ namespace Core.Entities
     public class Practice
     {
         [Key]
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public string Location { get; set; }
-        public List<DoctorPractice> DoctorPractices { get; set; } = new List<DoctorPractice>();
+        public int Id { get; init; }
+        [Required]
+        public string Name { get; init; }
+        [Required]
+        public string Location { get; init; }
+        public List<DoctorPractice> DoctorPractices { get; init; } = [];
     }
 }

@@ -3,16 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Application.DTOs;
 using Core.Entities;
 
 namespace Application.Interfaces
 {
     public interface IPracticeService
     {
-        Task<IEnumerable<Practice>> GetAllPracticesAsync();
-        Task<Practice> GetPracticeByIdAsync(int id);
-        Task AddPracticeAsync(Practice practice);
-        Task UpdatePracticeAsync(Practice practice);
+        Task<PracticeDto> GetPracticeByIdAsync(int id);
+        Task<IEnumerable<PracticeDto>> GetAllPracticesAsync();
+        Task AddPracticeAsync(PracticeDto practice);
+        Task UpdatePracticeAsync(PracticeDto practice);
         Task DeletePracticeAsync(int id);
     }
 }

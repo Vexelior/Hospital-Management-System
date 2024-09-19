@@ -7,5 +7,12 @@ using System.Threading.Tasks;
 
 namespace Core.Interfaces
 {
-    public interface IPracticeRepository : IRepository<Practice> { }
+    public interface IPracticeRepository : IRepository<Practice>
+    {
+        Task<Practice> GetPracticeByIdAsync(int id);
+        Task<IEnumerable<Practice>> GetAllPracticesAsync();
+        Task AddPracticeAsync(Practice patient);
+        Task UpdatePracticeAsync(Practice patient);
+        Task DeletePracticeAsync(int id);
+    }
 }
