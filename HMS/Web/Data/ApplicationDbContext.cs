@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Core.Entities.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Web.Data
@@ -9,5 +10,7 @@ namespace Web.Data
             : base(options)
         {
         }
+
+        public new DbSet<ApplicationUser> Users { get; init; }
     }
 }

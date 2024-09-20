@@ -1,13 +1,31 @@
-﻿@using Microsoft.AspNetCore.Identity
-@inject SignInManager<IdentityUser> SignInManager
-@inject UserManager<IdentityUser> UserManager
+﻿@using Core.Entities.Identity
+@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@{
+    var firstName = string.Empty;
+    if (SignInManager.IsSignedIn(User))
+    {
+        var user = await UserManager.GetUserAsync(User);
+        if (user != null && !string.IsNullOrEmpty(user.FirstName))
+        {
+            firstName = user.FirstName;
+        }
+        else
+        {
+            firstName = User.Identity.Name;
+        }
+    }
+}
+
 
 @if (SignInManager.IsSignedIn(User))
 {
-    <li><a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity?.Name!</a></li>
+    <li><a asp-area="Identity" asp-page="/Account/Manage/Index">Hello, @firstName!</a></li>
     <li>
-        <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-            <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
+        <a href="#" id="logout-button">Logout</a>
+        <form id="logout-form" class="form-inline d-none" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new {area = ""})">
         </form>
     </li>
 }
@@ -16,3 +34,25 @@ else
     <li><a asp-area="Identity" asp-page="/Account/Register">Register</a></li>
     <li><a asp-area="Identity" asp-page="/Account/Login">Login</a></li>
 }
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('#logout-button').click(function (e) {
+            e.preventDefault();
+            var form = $("#logout-form");
+            Swal.fire({
+                title: 'Are you sure you want to logout?',
+                showCancelButton: true,
+                confirmButtonText: `Yes`,
+                cancelButtonText: `No`,
+                icon: 'warning'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit();
+                }
+            });
+        });
+    });
+</script>

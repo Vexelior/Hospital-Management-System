@@ -1,21 +1,20 @@
 ﻿@{
-    if (ViewData.TryGetValue("ParentLayout", out var parentLayout) && parentLayout !=  null)
+    ViewData["Title"] = "Manage your account";
+    if (ViewData.TryGetValue("ParentLayout", out var parentLayout) && parentLayout != null)
     {
         Layout = parentLayout.ToString();
     }
 }
 
-<h1>Manage your account</h1>
-
-<div>
-    <h2>Change your account settings</h2>
-    <hr />
+<div class="container">
     <div class="row">
-        <div class="col-md-3">
-            <partial name="_ManageNav" />
-        </div>
-        <div class="col-md-9">
-            @RenderBody()
+        <div class="manage-account-inner">
+            <div class="col-md-2 account-manage-navigation">
+                <partial name="_ManageNav" />
+            </div>
+            <div class="col-md-9 account-manage-content">
+                @RenderBody()
+            </div>
         </div>
     </div>
 </div>
