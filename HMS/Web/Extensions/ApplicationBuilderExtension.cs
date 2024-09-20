@@ -66,7 +66,15 @@ namespace Web.Extensions
             {
                 if (!await roleManager.RoleExistsAsync(role))
                 {
-                    await roleManager.CreateAsync(new IdentityRole(role));
+                    var concurrencyStamp = Guid.NewGuid().ToString("D");
+                    var identityRole = new IdentityRole
+                    {
+                        Name = role,
+                        NormalizedName = role.ToUpper(),
+                        ConcurrencyStamp = concurrencyStamp
+                    };
+
+                    await roleManager.CreateAsync(identityRole);
                 }
             }
 

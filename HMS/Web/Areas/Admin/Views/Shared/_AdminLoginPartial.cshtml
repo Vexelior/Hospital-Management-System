@@ -1,0 +1,49 @@
+﻿@using Core.Entities.Identity
+@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@{
+    var firstName = string.Empty;
+    var user = await UserManager.GetUserAsync(User);
+    if (user != null && !string.IsNullOrEmpty(user.FirstName))
+    {
+        firstName = user.FirstName;
+    }
+    else
+    {
+        firstName = User.Identity.Name;
+    }
+}
+
+<li><p style="padding: .25rem 1rem;">Hello, @firstName!</p></li>
+<li><a class="dropdown-item" href="@Url.Action("Manage", "Account", new { area = "Identity" })" id="manage-account-button">Account Settings</a></li>
+<li><hr class="dropdown-divider" /></li>
+<li>
+    <a class="dropdown-item" href="#" id="logout-button">Logout</a>
+    <form id="logout-form" class="form-inline d-none" action="/Identity/Account/Logout" method="post">
+        @Html.AntiForgeryToken()
+    </form>
+</li>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('#logout-button').click(function (e) {
+            e.preventDefault();
+            var form = $("#logout-form");
+            Swal.fire({
+                title: 'Are you sure you want to logout?',
+                showCancelButton: true,
+                confirmButtonText: `Yes`,
+                cancelButtonText: `No`,
+                icon: 'warning'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit();
+                }
+            });
+        });
+    });
+</script>

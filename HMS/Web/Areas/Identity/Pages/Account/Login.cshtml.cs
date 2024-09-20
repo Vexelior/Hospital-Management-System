@@ -116,6 +116,12 @@ namespace Web.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
+
+                    if (User.IsInRole("Administrator"))
+                    {
+                        return RedirectToAction("Index", "Home", new { Area = "Admin" });
+                    }
+
                     return LocalRedirect(returnUrl);
                 }
                 if (result.RequiresTwoFactor)
