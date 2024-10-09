@@ -1,5 +1,5 @@
 ﻿using Application.Interfaces;
-using Core.Entities;
+using Core.Entities.Provider;
 using Core.Interfaces;
 using System;
 using System.Collections.Generic;

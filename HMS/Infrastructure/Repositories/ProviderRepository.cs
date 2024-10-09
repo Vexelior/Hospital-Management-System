@@ -1,4 +1,4 @@
-﻿using Core.Entities;
+﻿using Core.Entities.Provider;
 using Core.Interfaces;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
