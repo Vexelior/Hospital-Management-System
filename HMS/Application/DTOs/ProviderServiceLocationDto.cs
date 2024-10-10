@@ -1,6 +1,6 @@
-﻿namespace Core.Entities.Provider
+﻿namespace Application.DTOs
 {
-    public class ProviderServiceLocation
+    public class ProviderServiceLocationDto
     {
         public Guid Id { get; set; } = Guid.NewGuid();
         public string Name { get; set; }

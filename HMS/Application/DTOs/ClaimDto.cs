@@ -1,6 +1,6 @@
-﻿namespace Core.Entities.Claims
+﻿namespace Application.DTOs
 {
-    public class Claim
+    public class ClaimDto
     {
         public Guid Id { get; set; } = Guid.NewGuid();
         public string Number { get; set; }
