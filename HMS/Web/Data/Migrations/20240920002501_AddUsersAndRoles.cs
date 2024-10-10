@@ -18,14 +18,6 @@ namespace Web.Data.Migrations
                 nullable: true);
 
             migrationBuilder.AddColumn<string>(
-                name: "Discriminator",
-                table: "AspNetUsers",
-                type: "nvarchar(21)",
-                maxLength: 21,
-                nullable: false,
-                defaultValue: "");
-
-            migrationBuilder.AddColumn<string>(
                 name: "FirstName",
                 table: "AspNetUsers",
                 type: "nvarchar(max)",
@@ -49,10 +41,6 @@ namespace Web.Data.Migrations
         {
             migrationBuilder.DropColumn(
                 name: "DateOfBirth",
-                table: "AspNetUsers");
-
-            migrationBuilder.DropColumn(
-                name: "Discriminator",
                 table: "AspNetUsers");
 
             migrationBuilder.DropColumn(

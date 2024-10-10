@@ -9,6 +9,6 @@ namespace Core.Interfaces
 {
     public interface IProviderRepository : IRepository<Provider>
     {
-        Task<IEnumerable<Provider>> GetProvidersByTypeAsync(string type);
+        Task<IEnumerable<Provider>> GetProvidersByTypeAsync(char type);
     }
 }

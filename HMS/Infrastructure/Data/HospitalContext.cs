@@ -1,14 +1,7 @@
-﻿using Core.Entities;
+﻿using Core.Entities.Claims;
 using Core.Entities.Patient;
 using Core.Entities.Provider;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Emit;
-using System.Text;
-using System.Threading.Tasks;
-using Core.Entities.Claims;
 
 namespace Infrastructure.Data
 {

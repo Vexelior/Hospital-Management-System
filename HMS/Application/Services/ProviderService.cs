@@ -23,7 +23,7 @@ namespace Application.Services
             return await _providerRepository.GetByIdAsync(id);
         }
 
-        public async Task<IEnumerable<Provider>> GetProvidersByTypeAsync(string type)
+        public async Task<IEnumerable<Provider>> GetProvidersByTypeAsync(char type)
         {
             return await _providerRepository.GetProvidersByTypeAsync(type);
         }
