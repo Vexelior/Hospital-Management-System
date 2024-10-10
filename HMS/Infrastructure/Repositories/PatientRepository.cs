@@ -19,7 +19,7 @@ namespace Infrastructure.Repositories
             _context = context;
         }
 
-        public async Task<Patient> GetPatientByIdAsync(int id)
+        public async Task<Patient> GetPatientByIdAsync(Guid id)
         {
             return await _context.Patients.FindAsync(id);
         }

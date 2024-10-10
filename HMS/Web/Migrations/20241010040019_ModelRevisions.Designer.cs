@@ -4,16 +4,19 @@ using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace Web.Data.Migrations.HospitalContext
+namespace Web.Migrations
 {
-    [DbContext(typeof(Infrastructure.Data.HospitalContext))]
-    partial class HospitalContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(HospitalContext))]
+    [Migration("20241010040019_ModelRevisions")]
+    partial class ModelRevisions
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -66,7 +69,7 @@ namespace Web.Data.Migrations.HospitalContext
 
                     b.HasKey("Id");
 
-                    b.ToTable("Claims", (string)null);
+                    b.ToTable("Claims");
                 });
 
             modelBuilder.Entity("Core.Entities.Patient.Patient", b =>
@@ -122,7 +125,7 @@ namespace Web.Data.Migrations.HospitalContext
 
                     b.HasKey("Id");
 
-                    b.ToTable("Patients", (string)null);
+                    b.ToTable("Patients");
                 });
 
             modelBuilder.Entity("Core.Entities.Provider.Provider", b =>
@@ -169,7 +172,7 @@ namespace Web.Data.Migrations.HospitalContext
 
                     b.HasKey("Id");
 
-                    b.ToTable("Providers", (string)null);
+                    b.ToTable("Providers");
                 });
 
             modelBuilder.Entity("Core.Entities.Provider.ProviderServiceLocation", b =>
@@ -219,7 +222,7 @@ namespace Web.Data.Migrations.HospitalContext
 
                     b.HasKey("Id");
 
-                    b.ToTable("ProviderServiceLocations", (string)null);
+                    b.ToTable("ProviderServiceLocations");
                 });
 #pragma warning restore 612, 618
         }
