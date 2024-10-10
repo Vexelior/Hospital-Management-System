@@ -7,10 +7,9 @@ The **Hospital Management System** is a comprehensive web application designed t
 ## Features
 
 - **Patient Management:** Add, update, view, and delete patient records.
-- **Doctor Management:** Manage doctor profiles, specialties, and availability.
 - **Appointment Scheduling:** Schedule and manage patient appointments with doctors.
 - **Medical Records:** Maintain and view detailed medical records and histories.
-- **Admin Dashboard:** Admin interface to oversee hospital operations and manage user roles.
+- **Financial Management:** Review and process financial claims and histories.
 
 ## Architecture
 
