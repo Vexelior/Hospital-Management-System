@@ -1,9 +1,4 @@
 ﻿using Core.Entities.Provider;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Core.Interfaces
 {
@@ -11,5 +6,8 @@ namespace Core.Interfaces
     {
         Task<ProviderServiceLocation> GetProviderServiceLocationByIdAsync(Guid id);
         Task<IEnumerable<ProviderServiceLocation>> GetProviderServiceLocationsAsync();
+        Task CreateProviderServiceLocationAsync(ProviderServiceLocation providerServiceLocation);
+        Task UpdateProviderServiceLocationAsync(ProviderServiceLocation providerServiceLocation);
+        Task DeleteProviderServiceLocationAsync(Guid id);
     }
 }

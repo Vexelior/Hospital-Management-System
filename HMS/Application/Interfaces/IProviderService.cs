@@ -1,19 +1,14 @@
-﻿using Core.Entities.Provider;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Application.DTOs;
 
 namespace Application.Interfaces
 {
     public interface IProviderService
     {
-        public Task<IEnumerable<Provider>> GetAllProvidersAsync();
-        public Task<Provider> GetProviderByIdAsync(int id);
-        public Task<IEnumerable<Provider>> GetProvidersByTypeAsync(char type);
-        public Task AddProviderAsync(Provider provider);
-        public Task UpdateProviderAsync(Provider provider);
-        public Task DeleteProviderAsync(int id);
+        public Task<IEnumerable<ProviderDto>> GetAllProvidersAsync();
+        public Task<ProviderDto> GetProviderByIdAsync(Guid id);
+        public Task<IEnumerable<ProviderDto>> GetProvidersByTypeAsync(char type);
+        public Task AddProviderAsync(ProviderDto provider);
+        public Task UpdateProviderAsync(ProviderDto provider);
+        public Task DeleteProviderAsync(Guid id);
     }
 }

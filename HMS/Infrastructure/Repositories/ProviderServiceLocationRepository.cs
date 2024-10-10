@@ -23,5 +23,27 @@ namespace Infrastructure.Repositories
         {
             return await _context.ProviderServiceLocations.ToListAsync();
         }
+
+        public async Task CreateProviderServiceLocationAsync(ProviderServiceLocation providerServiceLocation)
+        {
+            _context.ProviderServiceLocations.Add(providerServiceLocation);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task UpdateProviderServiceLocationAsync(ProviderServiceLocation providerServiceLocation)
+        {
+            _context.Entry(providerServiceLocation).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task DeleteProviderServiceLocationAsync(Guid id)
+        {
+            var providerServiceLocation = await _context.ProviderServiceLocations.FindAsync(id);
+            if (providerServiceLocation != null)
+            {
+                _context.ProviderServiceLocations.Remove(providerServiceLocation);
+                await _context.SaveChangesAsync();
+            }
+        }
     }
 }
