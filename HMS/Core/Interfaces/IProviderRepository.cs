@@ -1,4 +1,4 @@
-﻿using Core.Entities;
+﻿using Core.Entities.Provider;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +9,6 @@ namespace Core.Interfaces
 {
     public interface IProviderRepository : IRepository<Provider>
     {
-        Task<IEnumerable<Provider>> GetProvidersByTypeAsync(string type);
+        Task<IEnumerable<Provider>> GetProvidersByTypeAsync(char type);
     }
 }

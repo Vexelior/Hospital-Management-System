@@ -1,11 +1,6 @@
 ﻿using Application.Interfaces;
-using Core.Entities;
+using Core.Entities.Provider;
 using Core.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Services
 {
@@ -28,7 +23,7 @@ namespace Application.Services
             return await _providerRepository.GetByIdAsync(id);
         }
 
-        public async Task<IEnumerable<Provider>> GetProvidersByTypeAsync(string type)
+        public async Task<IEnumerable<Provider>> GetProvidersByTypeAsync(char type)
         {
             return await _providerRepository.GetProvidersByTypeAsync(type);
         }

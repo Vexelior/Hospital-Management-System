@@ -1,4 +1,4 @@
-﻿using Core.Entities;
+﻿using Core.Entities.Provider;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +11,7 @@ namespace Application.Interfaces
     {
         public Task<IEnumerable<Provider>> GetAllProvidersAsync();
         public Task<Provider> GetProviderByIdAsync(int id);
-        public Task<IEnumerable<Provider>> GetProvidersByTypeAsync(string type);
+        public Task<IEnumerable<Provider>> GetProvidersByTypeAsync(char type);
         public Task AddProviderAsync(Provider provider);
         public Task UpdateProviderAsync(Provider provider);
         public Task DeleteProviderAsync(int id);
