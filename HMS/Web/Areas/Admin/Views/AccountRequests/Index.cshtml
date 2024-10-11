@@ -1,0 +1,74 @@
+﻿@using Core.Entities.Account
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model IEnumerable<Core.Entities.Account.AccountRequest>
+
+@{
+    ViewData["Title"] = "Account Requests";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class="text-center">Account Requests</h1>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Full Name</th>
+                        <th>Email</th>
+                        <th>Specialization</th>
+                        <th>Status</th>
+                        <th>Submitted At</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var request in Model)
+                    {
+                        <tr>
+                            <td>@request.LastName, @request.FirstName</td>
+                            <td>@request.Email</td>
+                            <td>@request.Specialization</td>
+                            @switch (request.Status)
+                            {
+                                case AccountRequestStatus.Pending:
+                                    <td><span class="badge bg-warning">Pending</span></td>
+                                    break;
+                                case AccountRequestStatus.Approved:
+                                    <td><span class="badge bg-success">Approved</span></td>
+                                    break;
+                                case AccountRequestStatus.Rejected:
+                                    <td><span class="badge bg-danger">Rejected</span></td>
+                                    break;
+                                default:
+                                    throw new ArgumentOutOfRangeException();
+                            }
+                            <td>@request.SubmittedAt.ToLocalTime().ToString("g")</td>
+                            <td>
+                                @if (request.Status == AccountRequestStatus.Pending)
+                                {
+                                    @using (Html.BeginForm("Approve", "AccountRequests", FormMethod.Post, new { @class = "d-inline" }))
+                                    {
+                                        <input type="hidden" name="id" value="@request.Id" />
+                                        <button type="submit" class="btn btn-success btn-sm">Approve</button>
+                                    }
+
+                                    @using (Html.BeginForm("Reject", "AccountRequests", FormMethod.Post, new { @class = "d-inline" }))
+                                    {
+                                        <input type="hidden" name="id" value="@request.Id" />
+                                        <input type="text" name="rejectionReason" placeholder="Reason" required class="form-control form-control-sm" style="width:200px; display:inline;" />
+                                        <button type="submit" class="btn btn-danger btn-sm">Reject</button>
+                                    }
+                                }
+                                else
+                                {
+                                    <span class="badge bg-secondary">Processed</span>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -6,10 +6,7 @@ namespace Web.Data
 {
     public class ApplicationDbContext : IdentityDbContext
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
-            : base(options)
-        {
-        }
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options): base(options) { }
 
         public new DbSet<ApplicationUser> Users { get; init; }
     }

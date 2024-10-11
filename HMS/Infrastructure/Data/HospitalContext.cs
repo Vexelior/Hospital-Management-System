@@ -1,5 +1,7 @@
-﻿using Core.Entities.Appointments;
+﻿using Core.Entities.Account;
+using Core.Entities.Appointments;
 using Core.Entities.Claims;
+using Core.Entities.Identity;
 using Core.Entities.Patient;
 using Core.Entities.Provider;
 using Microsoft.EntityFrameworkCore;
@@ -16,5 +18,6 @@ namespace Infrastructure.Data
         public DbSet<Appointment> Appointments { get; set; }
         public DbSet<AppointmentStatus> AppointmentStatuses { get; set; }
         public DbSet<AppointmentType> AppointmentTypes { get; set; }
+        public DbSet<AccountRequest> AccountRequests { get; set; }
     }
 }

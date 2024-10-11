@@ -12,8 +12,8 @@ using Web.Data;
 namespace Web.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240920002501_AddUsersAndRoles")]
-    partial class AddUsersAndRoles
+    [Migration("20241011203739_RemoveDiscriminatorFromSnapshotAgain")]
+    partial class RemoveDiscriminatorFromSnapshotAgain
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -244,13 +244,15 @@ namespace Web.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("FirstName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<bool>("IsOnline")
                         .HasColumnType("bit");
 
                     b.Property<string>("LastName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(60)
+                        .HasColumnType("nvarchar(60)");
 
                     b.HasDiscriminator().HasValue("ApplicationUser");
                 });
