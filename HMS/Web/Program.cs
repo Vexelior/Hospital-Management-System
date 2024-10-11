@@ -1,3 +1,4 @@
+using Application.Interfaces;
 using Application.Services;
 using Core.Entities.Identity;
 using Core.Interfaces;
@@ -37,6 +38,11 @@ builder.Services.AddScoped<AppointmentService>();
 
 builder.Services.AddScoped<IClaimRepository, ClaimRepository>();
 builder.Services.AddScoped<ClaimService>();
+
+builder.Services.AddScoped<IAccountRequestRepository, AccountRequestRepository>();
+builder.Services.AddScoped<AccountRequestService>();
+
+builder.Services.AddTransient<IEmailService, EmailService>();
 // End Services \\
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();

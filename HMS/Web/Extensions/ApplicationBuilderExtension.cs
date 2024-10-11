@@ -51,15 +51,10 @@ namespace Web.Extensions
         {
             string[] roles = [
                 "Administrator",
-                "Hospital Manager",
-                "Receptionist",
-                "Doctor",
-                "Nurse",
-                "Pharmacist",
-                "Finance",
-                "IT Support",
-                "Patient",
-                "Security Personnel"
+                "Manager",
+                "Employee",
+                "Provider",
+                "Patient"
             ];
 
             foreach (var role in roles)

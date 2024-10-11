@@ -39,7 +39,7 @@
 }
 else
 {
-    <li><a asp-area="Identity" asp-page="/Account/Register">Register</a></li>
+    <li><a href="@Url.Action("Create", "AccountRequests", new { Area = "" })">Register</a></li>
     <li><a asp-area="Identity" asp-page="/Account/Login">Login</a></li>
 }
 
