@@ -5,23 +5,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories
 {
-    public class ProviderServiceLocationRepository : IProviderServiceLocationRepository
+    public class ProviderServiceLocationRepository : RepositoryBase<ProviderServiceLocation>, IProviderServiceLocationRepository
     {
-        private readonly HospitalContext _context;
+        public ProviderServiceLocationRepository(HospitalContext context) : base(context) { }
 
-        public ProviderServiceLocationRepository(HospitalContext context)
-        {
-            _context = context;
-        }
-
-        public async Task<ProviderServiceLocation> GetProviderServiceLocationByIdAsync(Guid id)
-        {
-            return await _context.ProviderServiceLocations.FindAsync(id);
-        }
-
-        public async Task<IEnumerable<ProviderServiceLocation>> GetProviderServiceLocationsAsync()
-        {
-            return await _context.ProviderServiceLocations.ToListAsync();
-        }
     }
 }

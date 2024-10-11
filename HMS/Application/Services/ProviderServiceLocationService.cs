@@ -1,4 +1,5 @@
-﻿using Application.Interfaces;
+﻿using Application.DTOs;
+using Application.Interfaces;
 using Core.Entities.Provider;
 using Core.Interfaces;
 
@@ -13,14 +14,90 @@ namespace Application.Services
             _providerServiceLocationRepository = providerServiceLocationRepository;
         }
 
-        public async Task<IEnumerable<ProviderServiceLocation>> GetAllProviderServiceLocationsAsync()
+        public async Task<IEnumerable<ProviderServiceLocationDto>> GetAllProviderServiceLocationsAsync()
         {
-            return await _providerServiceLocationRepository.GetProviderServiceLocationsAsync();
+            var prSvcLoc =  await _providerServiceLocationRepository.ListAllAsync();
+            var prSvcLocDto = new List<ProviderServiceLocationDto>();
+
+            foreach (var property in prSvcLoc.GetType().GetProperties())
+            {
+                var prSvcLocDtoProperty = new ProviderServiceLocationDto();
+                foreach (var propertyDto in prSvcLocDtoProperty.GetType().GetProperties())
+                {
+                    if (property.Name == propertyDto.Name)
+                    {
+                        propertyDto.SetValue(prSvcLocDtoProperty, property.GetValue(prSvcLoc));
+                    }
+                }
+                prSvcLocDto.Add(prSvcLocDtoProperty);
+            }
+            
+            return prSvcLocDto;
         }
 
-        public async Task<ProviderServiceLocation> GetProviderServiceLocationByIdAsync(Guid id)
+        public async Task<ProviderServiceLocationDto> GetProviderServiceLocationByIdAsync(Guid id)
         {
-            return await _providerServiceLocationRepository.GetProviderServiceLocationByIdAsync(id);
+            var prSvcLoc = await _providerServiceLocationRepository.GetByIdAsync(id);
+            var prSvcLocDto = new ProviderServiceLocationDto();
+
+            foreach (var property in prSvcLoc.GetType().GetProperties())
+            {
+                foreach (var propertyDto in prSvcLocDto.GetType().GetProperties())
+                {
+                    if (property.Name == propertyDto.Name)
+                    {
+                        propertyDto.SetValue(prSvcLocDto, property.GetValue(prSvcLoc));
+                    }
+                }
+            }
+
+            return prSvcLocDto;
+        }
+
+        public async Task CreateProviderServiceLocationAsync(ProviderServiceLocationDto providerServiceLocation)
+        {
+            var prSvcLoc = new ProviderServiceLocation();
+
+            foreach (var property in providerServiceLocation.GetType().GetProperties())
+            {
+                foreach (var propertyPrSvcLoc in prSvcLoc.GetType().GetProperties())
+                {
+                    if (property.Name == propertyPrSvcLoc.Name)
+                    {
+                        propertyPrSvcLoc.SetValue(prSvcLoc, property.GetValue(providerServiceLocation));
+                    }
+                }
+            }
+
+            await _providerServiceLocationRepository.AddAsync(prSvcLoc);
+        }
+
+        public async Task UpdateProviderServiceLocationAsync(ProviderServiceLocationDto providerServiceLocation)
+        {
+            var prSvcLoc = new ProviderServiceLocation();
+
+            foreach (var property in providerServiceLocation.GetType().GetProperties())
+            {
+                foreach (var propertyPrSvcLoc in prSvcLoc.GetType().GetProperties())
+                {
+                    if (property.Name == propertyPrSvcLoc.Name)
+                    {
+                        propertyPrSvcLoc.SetValue(prSvcLoc, property.GetValue(providerServiceLocation));
+                    }
+                }
+            }
+
+            await _providerServiceLocationRepository.UpdateAsync(prSvcLoc);
+        }
+
+        public async Task DeleteProviderServiceLocationAsync(Guid id)
+        {
+            var prSvcLoc = await _providerServiceLocationRepository.GetByIdAsync(id);
+
+            if (prSvcLoc != null)
+            {
+                await _providerServiceLocationRepository.DeleteAsync(prSvcLoc);
+            }
         }
     }
 }

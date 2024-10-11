@@ -22,11 +22,22 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.R
                 .AddRoleManager<RoleManager<IdentityRole>>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
+// Services \\
 builder.Services.AddScoped<IProviderRepository, ProviderRepository>();
 builder.Services.AddScoped<ProviderService>();
 
 builder.Services.AddScoped<IProviderServiceLocationRepository, ProviderServiceLocationRepository>();
 builder.Services.AddScoped<ProviderServiceLocationService>();
+
+builder.Services.AddScoped<IPatientRepository, PatientRepository>();
+builder.Services.AddScoped<PatientService>();
+
+builder.Services.AddScoped<IAppointmentRepository, AppointmentRepository>();
+builder.Services.AddScoped<AppointmentService>();
+
+builder.Services.AddScoped<IClaimRepository, ClaimRepository>();
+builder.Services.AddScoped<ClaimService>();
+// End Services \\
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddControllersWithViews();
