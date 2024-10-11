@@ -28,6 +28,12 @@ builder.Services.AddScoped<ProviderService>();
 builder.Services.AddScoped<IProviderServiceLocationRepository, ProviderServiceLocationRepository>();
 builder.Services.AddScoped<ProviderServiceLocationService>();
 
+builder.Services.AddScoped<IPatientRepository, PatientRepository>();
+builder.Services.AddScoped<PatientService>();
+
+builder.Services.AddScoped<IAppointmentRepository, AppointmentRepository>();
+builder.Services.AddScoped<AppointmentService>();
+
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddControllersWithViews();
 

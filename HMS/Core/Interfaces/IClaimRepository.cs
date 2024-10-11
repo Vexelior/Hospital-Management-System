@@ -2,7 +2,7 @@
 
 namespace Core.Interfaces
 {
-    public interface IClaimRepository
+    public interface IClaimRepository : IRepository<Claim>
     {
         Task<Claim> GetClaimByIdAsync(Guid id);
         Task<IEnumerable<Claim>> GetAllClaimsAsync();

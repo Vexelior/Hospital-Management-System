@@ -2,7 +2,7 @@
 
 namespace Core.Interfaces
 {
-    public interface IProviderServiceLocationRepository
+    public interface IProviderServiceLocationRepository : IRepository<ProviderServiceLocation>
     {
         Task<ProviderServiceLocation> GetProviderServiceLocationByIdAsync(Guid id);
         Task<IEnumerable<ProviderServiceLocation>> GetProviderServiceLocationsAsync();

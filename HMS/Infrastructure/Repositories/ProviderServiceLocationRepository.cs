@@ -14,6 +14,8 @@ namespace Infrastructure.Repositories
             _context = context;
         }
 
+
+
         public async Task<ProviderServiceLocation> GetProviderServiceLocationByIdAsync(Guid id)
         {
             return await _context.ProviderServiceLocations.FindAsync(id);
@@ -44,6 +46,31 @@ namespace Infrastructure.Repositories
                 _context.ProviderServiceLocations.Remove(providerServiceLocation);
                 await _context.SaveChangesAsync();
             }
+        }
+
+        public Task<ProviderServiceLocation> GetByIdAsync(Guid id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IEnumerable<ProviderServiceLocation>> ListAllAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<ProviderServiceLocation> AddAsync(ProviderServiceLocation entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task UpdateAsync(ProviderServiceLocation entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task DeleteAsync(ProviderServiceLocation entity)
+        {
+            throw new NotImplementedException();
         }
     }
 }

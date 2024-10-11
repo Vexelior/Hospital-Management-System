@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace Core.Interfaces
 {
-    public interface IPatientRepository
+    public interface IPatientRepository : IRepository<Patient>
     {
         Task<Patient> GetPatientByIdAsync(Guid id);
         Task<IEnumerable<Patient>> GetAllPatientsAsync();
         Task AddPatientAsync(Patient patient);
         Task UpdatePatientAsync(Patient patient);
-        Task DeletePatientAsync(int id);
+        Task DeletePatientAsync(Guid id);
     }
 }

@@ -47,5 +47,30 @@ namespace Infrastructure.Repositories
             _context.Patients.Remove(patient);
             await _context.SaveChangesAsync();
         }
+
+        public Task<Patient> GetByIdAsync(Guid id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IEnumerable<Patient>> ListAllAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Patient> AddAsync(Patient entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task UpdateAsync(Patient entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task DeleteAsync(Patient entity)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
