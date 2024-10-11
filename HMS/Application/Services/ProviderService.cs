@@ -66,6 +66,7 @@ namespace Application.Services
         public async Task AddProviderAsync(ProviderDto provider)
         {
             var newProvider = new Provider();
+
             foreach (var property in provider.GetType().GetProperties())
             {
                 newProvider.GetType().GetProperty(property.Name)?.SetValue(newProvider, property.GetValue(provider));
@@ -77,6 +78,7 @@ namespace Application.Services
         public async Task UpdateProviderAsync(ProviderDto provider)
         {
             var updatedProvider = new Provider();
+
             foreach (var property in provider.GetType().GetProperties())
             {
                 updatedProvider.GetType().GetProperty(property.Name)?.SetValue(updatedProvider, property.GetValue(provider));
@@ -88,6 +90,7 @@ namespace Application.Services
         public async Task DeleteProviderAsync(Guid id)
         {
             var provider = await _providerRepository.GetByIdAsync(id);
+
             if (provider != null)
             {
                 await _providerRepository.DeleteAsync(provider);

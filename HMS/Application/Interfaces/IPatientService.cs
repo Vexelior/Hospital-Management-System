@@ -1,9 +1,4 @@
 ﻿using Application.DTOs;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Interfaces
 {
@@ -13,6 +8,6 @@ namespace Application.Interfaces
         Task<IEnumerable<PatientDto>> GetAllPatientsAsync();
         Task AddPatientAsync(PatientDto patientDto);
         Task UpdatePatientAsync(PatientDto patientDto);
-        Task DeletePatientAsync(int id);
+        Task DeletePatientAsync(Guid id);
     }
 }

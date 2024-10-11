@@ -1,5 +1,4 @@
 ﻿using Application.DTOs;
-using Core.Entities.Provider;
 
 namespace Application.Interfaces
 {

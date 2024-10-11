@@ -2,11 +2,6 @@
 using Application.Interfaces;
 using Core.Entities.Appointments;
 using Core.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Services
 {
@@ -21,7 +16,7 @@ namespace Application.Services
 
         public async Task<AppointmentDto> GetAppointmentByIdAsync(Guid id)
         {
-            var appointment = await _appointmentRepository.GetAppointmentByIdAsync(id);
+            var appointment = await _appointmentRepository.GetByIdAsync(id);
             var appointmentDto = new AppointmentDto();
             foreach (var property in appointment.GetType().GetProperties())
             {
@@ -34,7 +29,7 @@ namespace Application.Services
 
         public async Task<IEnumerable<AppointmentDto>> GetAllAppointmentsAsync()
         {
-            var appointments = await _appointmentRepository.GetAllAppointmentsAsync();
+            var appointments = await _appointmentRepository.ListAllAsync();
             var appointmentDtos = new List<AppointmentDto>();
             foreach (var appointment in appointments)
             {
@@ -84,19 +79,25 @@ namespace Application.Services
 
             return appointmentDtos;
         }
+
         public async Task AddAppointmentAsync(Appointment appointment)
         {
-            await _appointmentRepository.AddAppointmentAsync(appointment);
+            await _appointmentRepository.AddAsync(appointment);
         }
 
         public async Task UpdateAppointmentAsync(Appointment appointment)
         {
-            await _appointmentRepository.UpdateAppointmentAsync(appointment);
+            await _appointmentRepository.UpdateAsync(appointment);
         }
 
         public async Task DeleteAppointmentAsync(Guid id)
         {
-            await _appointmentRepository.DeleteAppointmentAsync(id);
+            var appointment = await _appointmentRepository.GetByIdAsync(id);
+
+            if (appointment != null)
+            {
+                await _appointmentRepository.DeleteAsync(appointment);
+            }
         }
     }
 }

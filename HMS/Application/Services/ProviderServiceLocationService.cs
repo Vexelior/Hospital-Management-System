@@ -16,7 +16,7 @@ namespace Application.Services
 
         public async Task<IEnumerable<ProviderServiceLocationDto>> GetAllProviderServiceLocationsAsync()
         {
-            var prSvcLoc =  await _providerServiceLocationRepository.GetProviderServiceLocationsAsync();
+            var prSvcLoc =  await _providerServiceLocationRepository.ListAllAsync();
             var prSvcLocDto = new List<ProviderServiceLocationDto>();
 
             foreach (var property in prSvcLoc.GetType().GetProperties())
@@ -37,7 +37,7 @@ namespace Application.Services
 
         public async Task<ProviderServiceLocationDto> GetProviderServiceLocationByIdAsync(Guid id)
         {
-            var prSvcLoc = await _providerServiceLocationRepository.GetProviderServiceLocationByIdAsync(id);
+            var prSvcLoc = await _providerServiceLocationRepository.GetByIdAsync(id);
             var prSvcLocDto = new ProviderServiceLocationDto();
 
             foreach (var property in prSvcLoc.GetType().GetProperties())
@@ -69,7 +69,7 @@ namespace Application.Services
                 }
             }
 
-            await _providerServiceLocationRepository.CreateProviderServiceLocationAsync(prSvcLoc);
+            await _providerServiceLocationRepository.AddAsync(prSvcLoc);
         }
 
         public async Task UpdateProviderServiceLocationAsync(ProviderServiceLocationDto providerServiceLocation)
@@ -87,13 +87,17 @@ namespace Application.Services
                 }
             }
 
-            await _providerServiceLocationRepository.UpdateProviderServiceLocationAsync(prSvcLoc);
+            await _providerServiceLocationRepository.UpdateAsync(prSvcLoc);
         }
 
         public async Task DeleteProviderServiceLocationAsync(Guid id)
         {
-            var prSvcLoc = await _providerServiceLocationRepository.GetProviderServiceLocationByIdAsync(id);
-            if (prSvcLoc != null) await _providerServiceLocationRepository.DeleteProviderServiceLocationAsync(id);
+            var prSvcLoc = await _providerServiceLocationRepository.GetByIdAsync(id);
+
+            if (prSvcLoc != null)
+            {
+                await _providerServiceLocationRepository.DeleteAsync(prSvcLoc);
+            }
         }
     }
 }

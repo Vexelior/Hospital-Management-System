@@ -16,9 +16,9 @@ namespace Application.Services
 
         public async Task<ClaimDto> GetClaimByIdAsync(Guid id)
         {
-            var claim = await _claimRepository.GetClaimByIdAsync(id);
-
+            var claim = await _claimRepository.GetByIdAsync(id);
             var claimDto = new ClaimDto();
+
             foreach (var property in claim.GetType().GetProperties())
             {
                 var claimDtoProperty = claimDto.GetType().GetProperty(property.Name);
@@ -30,9 +30,9 @@ namespace Application.Services
 
         public async Task<IEnumerable<ClaimDto>> GetAllClaimsAsync()
         {
-            var claims = await _claimRepository.GetAllClaimsAsync();
-
+            var claims = await _claimRepository.ListAllAsync();
             var claimDtos = new List<ClaimDto>();
+
             foreach (var claim in claims)
             {
                 var claimDto = new ClaimDto();
@@ -50,8 +50,8 @@ namespace Application.Services
         public async Task<IEnumerable<ClaimDto>> GetClaimsByPatientIdAsync(Guid id)
         {
             var claims = await _claimRepository.GetClaimsByPatientIdAsync(id);
-
             var claimDtos = new List<ClaimDto>();
+
             foreach (var claim in claims)
             {
                 var claimDto = new ClaimDto();
@@ -69,18 +69,19 @@ namespace Application.Services
         public async Task AddClaimAsync(ClaimDto claimDto)
         {
             var claim = new Claim();
+
             foreach (var property in claimDto.GetType().GetProperties())
             {
                 var claimProperty = claim.GetType().GetProperty(property.Name);
                 if (claimProperty != null) claimProperty.SetValue(claim, property.GetValue(claimDto));
             }
 
-            await _claimRepository.AddClaimAsync(claim);
+            await _claimRepository.AddAsync(claim);
         }
 
         public async Task UpdateClaimAsync(ClaimDto claimDto)
         {
-            var claim = await _claimRepository.GetClaimByIdAsync(claimDto.Id);
+            var claim = await _claimRepository.GetByIdAsync(claimDto.Id);
 
             foreach (var property in claimDto.GetType().GetProperties())
             {
@@ -92,12 +93,17 @@ namespace Application.Services
                 }
             }
 
-            await _claimRepository.UpdateClaimAsync(claim);
+            await _claimRepository.UpdateAsync(claim);
         }
 
         public async Task DeleteClaimAsync(Guid id)
         {
-            await _claimRepository.DeleteClaimAsync(id);
+            var claim = await _claimRepository.GetByIdAsync(id);
+
+            if (claim != null)
+            {
+                await _claimRepository.DeleteAsync(claim);
+            }
         }
     }
 }
