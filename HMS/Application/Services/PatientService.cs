@@ -48,6 +48,7 @@ namespace Application.Services
         public async Task AddPatientAsync(PatientDto patientDto)
         {
             var patient = new Patient();
+
             foreach (var property in patient.GetType().GetProperties())
             {
                 property.SetValue(patient, patientDto.GetType().GetProperty(property.Name)?.GetValue(patientDto));

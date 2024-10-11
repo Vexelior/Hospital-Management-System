@@ -18,6 +18,7 @@ namespace Application.Services
         {
             var appointment = await _appointmentRepository.GetByIdAsync(id);
             var appointmentDto = new AppointmentDto();
+
             foreach (var property in appointment.GetType().GetProperties())
             {
                 var appointmentDtoProperty = appointmentDto.GetType().GetProperty(property.Name);
@@ -31,6 +32,7 @@ namespace Application.Services
         {
             var appointments = await _appointmentRepository.ListAllAsync();
             var appointmentDtos = new List<AppointmentDto>();
+
             foreach (var appointment in appointments)
             {
                 var appointmentDto = new AppointmentDto();
@@ -48,6 +50,7 @@ namespace Application.Services
         {
             var appointments = await _appointmentRepository.GetAppointmentsByStatusAsync(status);
             var appointmentDtos = new List<AppointmentDto>();
+
             foreach (var appointment in appointments)
             {
                 var appointmentDto = new AppointmentDto();
@@ -66,6 +69,7 @@ namespace Application.Services
         {
             var appointments = await _appointmentRepository.GetAppointmentsByTypeAsync(type);
             var appointmentDtos = new List<AppointmentDto>();
+
             foreach (var appointment in appointments)
             {
                 var appointmentDto = new AppointmentDto();
