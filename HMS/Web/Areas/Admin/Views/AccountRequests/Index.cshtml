@@ -11,64 +11,87 @@
     <div class="row">
         <div class="col-md-12">
             <h1 class="text-center">Account Requests</h1>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Full Name</th>
-                        <th>Email</th>
-                        <th>Specialization</th>
-                        <th>Status</th>
-                        <th>Submitted At</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var request in Model)
-                    {
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
                         <tr>
-                            <td>@request.LastName, @request.FirstName</td>
-                            <td>@request.Email</td>
-                            <td>@request.Specialization</td>
-                            @switch (request.Status)
-                            {
-                                case AccountRequestStatus.Pending:
-                                    <td><span class="badge bg-warning">Pending</span></td>
-                                    break;
-                                case AccountRequestStatus.Approved:
-                                    <td><span class="badge bg-success">Approved</span></td>
-                                    break;
-                                case AccountRequestStatus.Rejected:
-                                    <td><span class="badge bg-danger">Rejected</span></td>
-                                    break;
-                                default:
-                                    throw new ArgumentOutOfRangeException();
-                            }
-                            <td>@request.SubmittedAt.ToLocalTime().ToString("g")</td>
-                            <td>
-                                @if (request.Status == AccountRequestStatus.Pending)
-                                {
-                                    @using (Html.BeginForm("Approve", "AccountRequests", FormMethod.Post, new { @class = "d-inline" }))
-                                    {
-                                        <input type="hidden" name="id" value="@request.Id" />
-                                        <button type="submit" class="btn btn-success btn-sm">Approve</button>
-                                    }
-
-                                    @using (Html.BeginForm("Reject", "AccountRequests", FormMethod.Post, new { @class = "d-inline" }))
-                                    {
-                                        <input type="hidden" name="id" value="@request.Id" />
-                                        <input type="text" name="rejectionReason" placeholder="Reason" required class="form-control form-control-sm" style="width:200px; display:inline;" />
-                                        <button type="submit" class="btn btn-danger btn-sm">Reject</button>
-                                    }
-                                }
-                                else
-                                {
-                                    <span class="badge bg-secondary">Processed</span>
-                                }
-                            </td>
+                            <th>Full Name</th>
+                            <th>Email</th>
+                            <th>Specialization</th>
+                            <th>Status</th>
+                            <th>Submitted At</th>
+                            <th>Actions</th>
                         </tr>
-                    }
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        @foreach (var request in Model)
+                        {
+                            <tr>
+                                <td>@request.LastName, @request.FirstName</td>
+                                <td>@request.Email</td>
+                                <td>@request.Specialization</td>
+                                @switch (request.Status)
+                                {
+                                    case AccountRequestStatus.Pending:
+                                        <td><span class="badge bg-warning">Pending</span></td>
+                                        break;
+                                    case AccountRequestStatus.Approved:
+                                        <td><span class="badge bg-success">Approved</span></td>
+                                        break;
+                                    case AccountRequestStatus.Rejected:
+                                        <td><span class="badge bg-danger">Rejected</span></td>
+                                        break;
+                                    default:
+                                        throw new ArgumentOutOfRangeException();
+                                }
+                                <td>@request.SubmittedAt.ToLocalTime().ToString("g")</td>
+                                <td>
+                                    @if (request.Status == AccountRequestStatus.Pending)
+                                    {
+                                        @using (Html.BeginForm("Approve", "AccountRequests", FormMethod.Post, new { @class = "d-inline" }))
+                                        {
+                                            @Html.Hidden("id", request.Id)
+                                            <button type="submit" class="btn btn-success btn-sm">Approve</button>
+                                        }
+                                        <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#rejectModal_@request.Id">
+                                            Reject
+                                        </button>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-secondary">Processed</span>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>
+
+@foreach (var request in Model)
+{
+    <div class="modal fade" id="rejectModal_@request.Id" tabindex="-1" aria-labelledby="rejectModalLabel_@request.Id" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="rejectModalLabel_@request.Id">Reject Account Request</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    @using (Html.BeginForm("Reject", "AccountRequests", FormMethod.Post, new { @class = "d-inline" }))
+                    {
+                        <input type="hidden" name="id" value="@request.Id" />
+                        <div class="mb-3">
+                            <label for="rejectionReason_@request.Id" class="form-label">Reason</label>
+                            <textarea name="rejectionReason" id="rejectionReason_@request.Id" class="form-control" rows="3" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-danger">Reject</button>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+}

@@ -1,4 +1,5 @@
-﻿using Application.Interfaces;
+﻿using System.Text;
+using Application.Interfaces;
 using Core.Entities.Account;
 using Core.Entities.Identity;
 using Core.Interfaces;
@@ -27,6 +28,24 @@ namespace Application.Services
         public async Task<IEnumerable<AccountRequest>> GetAllRequestsAsync()
         {
             return await _repository.ListAllAsync();
+        }
+
+        private async Task<AccountRequest> GetRequestByEmailAsync(string email)
+        {
+            return await _repository.GetRequestByEmail(email);
+        }
+
+        private async Task<AccountRequest> GetRequestByMedicalLicenseNumberAsync(string licenseNumber)
+        {
+            return await _repository.GetRequestByMedicalLicenseNumber(licenseNumber);
+        }
+
+        public async Task<bool> CheckExistingAccountRequest(string email, string licenseNumber)
+        {
+            var existingRequestByEmail = await GetRequestByEmailAsync(email);
+            var existingRequestByLicenseNumber = await GetRequestByMedicalLicenseNumberAsync(licenseNumber);
+
+            return existingRequestByEmail != null || existingRequestByLicenseNumber != null;
         }
 
         public async Task SubmitRequestAsync(AccountRequest request)
@@ -63,7 +82,8 @@ namespace Application.Services
                 TwoFactorEnabled = false
             };
 
-            var result = await _userManager.CreateAsync(user, GenerateSecurePassword());
+            var generatedPassword = GenerateSecurePassword();
+            var result = await _userManager.CreateAsync(user, generatedPassword);
 
             if (result.Succeeded)
             {
@@ -80,7 +100,7 @@ namespace Application.Services
                 await _emailService.SendEmailAsync(
                     user.Email,
                     "Your Account Request Has Been Approved",
-                    $"Hello {user.FirstName},<br/><br/>Your account request has been approved. You can now log in to the HMS.<br/><br/>Thank you."
+                    $"Hello {user.FirstName},<br/><br/>Your account request has been approved. You can now log in to the HMS using your temporary password: <strong>{generatedPassword}</strong>.<br/><br/>Please change your password after logging in."
                 );
             }
             else
@@ -112,7 +132,24 @@ namespace Application.Services
 
         private string GenerateSecurePassword()
         {
-            return "Secure@123";
+            var random = new Random();
+            var password = new StringBuilder();
+            var specialChars = "!@#$%^&*()_+-=[]{}|;:,.<>?";
+            var charSets = new List<string>
+            {
+                "abcdefghijklmnopqrstuvwxyz",
+                "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+                "0123456789",
+                specialChars
+            };
+
+            for (int i = 0; i < 12; i++)
+            {
+                var charSet = charSets[random.Next(charSets.Count)];
+                password.Append(charSet[random.Next(charSet.Length)]);
+            }
+
+            return password.ToString();
         }
     }
 }

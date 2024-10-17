@@ -25,6 +25,14 @@ namespace Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(AccountRequestViewModel model)
         {
+            var potentialExistingRequest = await _service.CheckExistingAccountRequest(model.Email, model.MedicalLicenseNumber);
+
+            if (potentialExistingRequest)
+            {
+                ModelState.AddModelError(string.Empty, "An account request with this email or medical license number already exists.");
+                return View(model);
+            }
+
             if (ModelState.IsValid)
             {
                 var request = new AccountRequest
