@@ -3,7 +3,6 @@ using Application.Interfaces;
 using Microsoft.Extensions.Configuration;
 using System.Net.Mail;
 using System.Net;
-using Application.Interfaces;
 
 namespace Application.Services
 {
