@@ -16,6 +16,7 @@ namespace Web.Controllers
             _service = service;
         }
 
+        [Route("account-request")]
         public IActionResult Create()
         {
             var viewModel = new AccountRequestViewModel
@@ -29,9 +30,10 @@ namespace Web.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
+        [Route("account-request")]
         public async Task<IActionResult> Create(AccountRequestViewModel model)
         {
-            var potentialExistingRequest = await _service.CheckExistingAccountRequest(model.Email, model.MedicalLicenseNumber);
+            var potentialExistingRequest = await _service.CheckExistingAccountRequest(model.Email);
 
             if (potentialExistingRequest)
             {
@@ -45,12 +47,6 @@ namespace Web.Controllers
             {
                 model.ListOfStates = listOfStates;
             }
-
-            if (model.YearsOfExperience == 0)
-            {
-                ModelState.AddModelError("YearsOfExperience", "Years of experience must be greater than 0.");
-                return View(model);
-            }
             
             if (model.DateOfBirth == DateTime.MinValue || model.DateOfBirth > DateTime.Now)
             {
@@ -59,12 +55,11 @@ namespace Web.Controllers
             }
 
             var foundMatchingState = false;
-            foreach (var state in listOfStates)
+            if (listOfStates != null)
             {
-                if (state.Value == model.SelectedState)
+                if (listOfStates.Any(state => state.Value == model.SelectedState))
                 {
                     foundMatchingState = true;
-                    break;
                 }
             }
 
@@ -74,52 +69,42 @@ namespace Web.Controllers
                 return View(model);
             }
 
-            if (ModelState.IsValid)
-            {
-                var request = new AccountRequest
-                {
-                    FirstName = model.FirstName,
-                    LastName = model.LastName,
-                    DateOfBirth = model.DateOfBirth,
-                    Email = model.Email,
-                    PhoneNumber = model.PhoneNumber,
-                    Address1 = model.Address1,
-                    Address2 = model.Address2,
-                    State = model.SelectedState,
-                    City = model.City,
-                    MedicalLicenseNumber = model.MedicalLicenseNumber,
-                    Specialization = model.Specialization,
-                    YearsOfExperience = model.YearsOfExperience,
-                    MedicalLicenseDocumentPath = await SaveFile(model.MedicalLicenseDocument),
-                    CertificationDocumentPath = await SaveFile(model.CertificationDocument),
-                    CVDocumentPath = await SaveFile(model.CVDocument)
-                };
+            if (!ModelState.IsValid) return View(model);
 
-                await _service.SubmitRequestAsync(request);
-                return RedirectToAction("SubmissionSuccess");
-            }
-            return View(model);
+            var request = new AccountRequest
+            {
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                DateOfBirth = model.DateOfBirth,
+                Email = model.Email,
+                PhoneNumber = model.PhoneNumber,
+                Address1 = model.Address1,
+                Address2 = model.Address2,
+                State = model.SelectedState,
+                City = model.City,
+                MedicalLicense = await ConvertFormFileToByteArray(model.MedicalLicenseDocument),
+                Certification = await ConvertFormFileToByteArray(model.CertificationDocument),
+                Resume = await ConvertFormFileToByteArray(model.CVDocument)
+            };
+
+            await _service.SubmitRequestAsync(request);
+            return RedirectToAction("SubmissionSuccess");
         }
 
         [AllowAnonymous]
+        [Route("account-request/success")]
         public IActionResult SubmissionSuccess()
         {
             return View();
         }
 
-        private async Task<string> SaveFile(IFormFile file)
+        private async Task<byte[]> ConvertFormFileToByteArray(IFormFile file)
         {
-            if (file == null || file.Length == 0)
-                return null;
+            if (file == null || file.Length == 0) return null;
 
-            var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/uploads", file.FileName);
-
-            using (var stream = new FileStream(path, FileMode.Create))
-            {
-                await file.CopyToAsync(stream);
-            }
-
-            return "/uploads/" + file.FileName;
+            using var memoryStream = new MemoryStream();
+            await file.CopyToAsync(memoryStream);
+            return memoryStream.ToArray();
         }
     }
 }

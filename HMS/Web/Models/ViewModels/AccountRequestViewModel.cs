@@ -7,10 +7,12 @@ namespace Web.Models.ViewModels
     {
         [Required]
         [Display(Name = "First Name")]
+        [MaxLength(50)]
         public string FirstName { get; set; }
 
         [Required]
         [Display(Name = "Last Name")]
+        [MaxLength(60)]
         public string LastName { get; set; }
 
         [Required]
@@ -37,22 +39,11 @@ namespace Web.Models.ViewModels
         [Display(Name = "City")]
         public string City { get; set; }
 
-        public List<SelectListItem> ListOfStates { get; set; }
-        
-        [Required]
         [Display(Name = "State")]
+        public List<SelectListItem> ListOfStates { get; set; }
+
+        [Required(ErrorMessage = "Please select a state")]
         public string SelectedState { get; set; }
-
-        [Required]
-        [Display(Name = "Medical License Number")]
-        public string MedicalLicenseNumber { get; set; }
-
-        [Required]
-        public string Specialization { get; set; }
-
-        [Required]
-        [Display(Name = "Years of Experience")]
-        public int YearsOfExperience { get; set; }
 
         [Required]
         [Display(Name = "Medical License Document")]

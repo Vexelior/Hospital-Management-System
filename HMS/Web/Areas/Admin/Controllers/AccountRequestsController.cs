@@ -16,6 +16,7 @@ namespace Web.Areas.Admin.Controllers
             _service = service;
         }
 
+        [Route("admin/account-requests")]
         public async Task<IActionResult> Index()
         {
             var requests = await _service.GetAllRequestsAsync();
@@ -27,6 +28,12 @@ namespace Web.Areas.Admin.Controllers
         public async Task<IActionResult> Approve(Guid id)
         {
             var adminUserId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            if (string.IsNullOrEmpty(adminUserId))
+            {
+                throw new Exception("Account ID not found.");
+            }
+
             await _service.ApproveRequestAsync(id, adminUserId);
             return RedirectToAction("Index");
         }
@@ -36,6 +43,12 @@ namespace Web.Areas.Admin.Controllers
         public async Task<IActionResult> Reject(Guid id, string rejectionReason)
         {
             var adminUserId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            if (string.IsNullOrEmpty(adminUserId))
+            {
+                throw new Exception("Account ID not found.");
+            }
+
             await _service.RejectRequestAsync(id, adminUserId, rejectionReason);
             return RedirectToAction("Index");
         }
@@ -43,19 +56,37 @@ namespace Web.Areas.Admin.Controllers
         public async Task<IActionResult> DownloadLicense(Guid id)
         {
             var request = await _service.GetRequestByIdAsync(id);
-            return File(request.MedicalLicenseDocumentPath, "application/pdf", $"{request.Id}_{request.LastName}-{request.FirstName}_MedicalLicense.pdf");
+
+            if (request.MedicalLicense == null)
+            {
+                return NotFound();
+            }
+
+            return File(request.MedicalLicense, "application/pdf", $"{request.Id}_{request.LastName}-{request.FirstName}_License.pdf");
         }
 
         public async Task<IActionResult> DownloadCertification(Guid id)
         {
             var request = await _service.GetRequestByIdAsync(id);
-            return File(request.CertificationDocumentPath, "application/pdf", $"{request.Id}_{request.LastName}-{request.FirstName}_Certification.pdf");
+
+            if (request.Certification == null)
+            {
+                return NotFound();
+            }
+
+            return File(request.Certification, "application/pdf", $"{request.Id}_{request.LastName}-{request.FirstName}_Certification.pdf");
         }
 
         public async Task<IActionResult> DownloadCV(Guid id)
         {
             var request = await _service.GetRequestByIdAsync(id);
-            return File(request.CVDocumentPath, "application/pdf", $"{request.Id}_{request.LastName}-{request.FirstName}_CV.pdf");
+
+            if (request.Resume == null)
+            {
+                return NotFound();
+            }
+
+            return File(request.Resume, "application/pdf", $"{request.Id}_{request.LastName}-{request.FirstName}_Resume.pdf");
         }
     }
 }

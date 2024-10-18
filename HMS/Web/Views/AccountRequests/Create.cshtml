@@ -71,21 +71,6 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label asp-for="MedicalLicenseNumber"></label>
-                    <input asp-for="MedicalLicenseNumber" class="form-control" />
-                    <span asp-validation-for="MedicalLicenseNumber" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Specialization"></label>
-                    <input asp-for="Specialization" class="form-control" />
-                    <span asp-validation-for="Specialization" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="YearsOfExperience"></label>
-                    <input asp-for="YearsOfExperience" class="form-control" />
-                    <span asp-validation-for="YearsOfExperience" class="text-danger"></span>
-                </div>
-                <div class="form-group">
                     <div class="row">
                         <div class="col-md-4">
                             <label asp-for="MedicalLicenseDocument"></label>
@@ -115,4 +100,50 @@
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
+
+    <script>
+        $(document).ready(function () {
+            $("#MedicalLicenseDocument").change(function () {
+                var file = this.files[0];
+                var fileType = file["type"];
+                var validImageTypes = ["application/pdf"];
+                if ($.inArray(fileType, validImageTypes) < 0) {
+                    CreateAlert("Invalid file type. Please upload a PDF file.");
+                    $("#MedicalLicenseDocument").val('');
+                }
+            });
+
+            $("#CertificationDocument").change(function () {
+                var file = this.files[0];
+                var fileType = file["type"];
+                var validImageTypes = ["application/pdf"];
+                if ($.inArray(fileType, validImageTypes) < 0) {
+                    CreateAlert("Invalid file type. Please upload a PDF file.");
+                    $("#CertificationDocument").val('');
+                }
+            });
+
+            $("#CVDocument").change(function () {
+                var file = this.files[0];
+                var fileType = file["type"];
+                var validImageTypes = ["application/pdf"];
+                if ($.inArray(fileType, validImageTypes) < 0) {
+                    CreateAlert("Invalid file type. Please upload a PDF file.");
+                    $("#CVDocument").val('');
+                }
+            });
+
+            const CreateAlert = (message) => {
+                var alert = `<div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                    ${message}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>`;
+
+                $("#account-login-form").prepend(alert);
+                setTimeout(() => {
+                    $(".alert").alert('close');
+                }, 5000);
+            }
+        });
+    </script>
 }

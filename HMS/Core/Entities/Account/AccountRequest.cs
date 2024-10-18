@@ -5,59 +5,55 @@ namespace Core.Entities.Account
     public class AccountRequest
     {
         [Key]
-        public Guid Id { get; set; } = Guid.NewGuid();
+        public Guid Id { get; init; } = Guid.NewGuid();
 
         // Personal Information
         [Required]
-        public string FirstName { get; set; }
+        [StringLength(50)]
+        public string FirstName { get; init; }
 
         [Required]
-        public string LastName { get; set; }
+        [StringLength(60)]
+        public string LastName { get; init; }
 
         [Required]
-        public DateTime DateOfBirth { get; set; }
+        public DateTime DateOfBirth { get; init; }
 
         [Required]
         [EmailAddress]
-        public string Email { get; set; }
+        [StringLength(100)]
+        public string Email { get; init; }
 
         [Phone]
-        public string PhoneNumber { get; set; }
+        [StringLength(12)]
+        public string PhoneNumber { get; init; }
 
         [Required]
-        public string Address1 { get; set; }
+        [StringLength(100)]
+        public string Address1 { get; init; }
 
-        public string Address2 { get; set; }
-
-        [Required]
-        public string City { get; set; }
-
-        [Required]
-        public string State { get; set; }
-
-        // Professional Information
-        [Required]
-        public string MedicalLicenseNumber { get; set; }
+        [StringLength(100)]
+        public string Address2 { get; init; }
 
         [Required]
-        public string Specialization { get; set; }
+        [StringLength(50)]
+        public string City { get; init; }
 
-        public int YearsOfExperience { get; set; }
+        [Required]
+        [StringLength(2)]
+        public string State { get; init; }
 
         // Documents
-        public string MedicalLicenseDocumentPath { get; set; }
-        public string CertificationDocumentPath { get; set; }
-        public string CVDocumentPath { get; set; }
+        public byte[] MedicalLicense { get; init; }
+        public byte[] Certification { get; init; }
+        public byte[] Resume { get; init; }
 
-        // Status
         public AccountRequestStatus Status { get; set; }
-
         public DateTime SubmittedAt { get; set; }
-
         public DateTime? ReviewedAt { get; set; }
-
-        public string ReviewedBy { get; set; } // Admin User ID
-
+        [StringLength(450)]
+        public string ReviewedBy { get; set; }
+        [StringLength(500)]
         public string RejectionReason { get; set; }
     }
 

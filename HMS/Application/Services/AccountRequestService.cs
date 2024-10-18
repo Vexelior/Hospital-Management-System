@@ -40,17 +40,11 @@ namespace Application.Services
             return await _repository.GetRequestByEmail(email);
         }
 
-        private async Task<AccountRequest> GetRequestByMedicalLicenseNumberAsync(string licenseNumber)
-        {
-            return await _repository.GetRequestByMedicalLicenseNumber(licenseNumber);
-        }
-
-        public async Task<bool> CheckExistingAccountRequest(string email, string licenseNumber)
+        public async Task<bool> CheckExistingAccountRequest(string email)
         {
             var existingRequestByEmail = await GetRequestByEmailAsync(email);
-            var existingRequestByLicenseNumber = await GetRequestByMedicalLicenseNumberAsync(licenseNumber);
 
-            return existingRequestByEmail != null || existingRequestByLicenseNumber != null;
+            return existingRequestByEmail != null;
         }
 
         public async Task SubmitRequestAsync(AccountRequest request)
@@ -117,9 +111,9 @@ namespace Application.Services
         public async Task RejectRequestAsync(Guid requestId, string adminUserId, string rejectionReason)
         {
             var request = await _repository.GetByIdAsync(requestId);
-            if (request == null || request.Status != AccountRequestStatus.Pending)
+            if (request == null)
             {
-                throw new InvalidOperationException("Invalid account request.");
+                throw new NullReferenceException("Invalid account request.");
             }
 
             request.Status = AccountRequestStatus.Rejected;
@@ -148,7 +142,7 @@ namespace Application.Services
                 specialChars
             };
 
-            for (int i = 0; i < 12; i++)
+            for (var i = 0; i < 12; i++)
             {
                 var charSet = charSets[random.Next(charSets.Count)];
                 password.Append(charSet[random.Next(charSet.Length)]);
