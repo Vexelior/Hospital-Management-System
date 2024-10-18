@@ -39,5 +39,23 @@ namespace Web.Areas.Admin.Controllers
             await _service.RejectRequestAsync(id, adminUserId, rejectionReason);
             return RedirectToAction("Index");
         }
+
+        public async Task<IActionResult> DownloadLicense(Guid id)
+        {
+            var request = await _service.GetRequestByIdAsync(id);
+            return File(request.MedicalLicenseDocumentPath, "application/pdf", $"{request.Id}_{request.LastName}-{request.FirstName}_MedicalLicense.pdf");
+        }
+
+        public async Task<IActionResult> DownloadCertification(Guid id)
+        {
+            var request = await _service.GetRequestByIdAsync(id);
+            return File(request.CertificationDocumentPath, "application/pdf", $"{request.Id}_{request.LastName}-{request.FirstName}_Certification.pdf");
+        }
+
+        public async Task<IActionResult> DownloadCV(Guid id)
+        {
+            var request = await _service.GetRequestByIdAsync(id);
+            return File(request.CVDocumentPath, "application/pdf", $"{request.Id}_{request.LastName}-{request.FirstName}_CV.pdf");
+        }
     }
 }

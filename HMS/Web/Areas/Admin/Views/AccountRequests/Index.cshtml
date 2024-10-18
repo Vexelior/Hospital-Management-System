@@ -1,5 +1,5 @@
-﻿@using Core.Entities.Account
-@using Microsoft.AspNetCore.Mvc.TagHelpers
+﻿@using System.Text
+@using Core.Entities.Account
 @model IEnumerable<Core.Entities.Account.AccountRequest>
 
 @{
@@ -16,11 +16,9 @@
                     <thead>
                         <tr>
                             <th>Full Name</th>
-                            <th>Email</th>
-                            <th>Specialization</th>
+                            <th>Submitted</th>
                             <th>Status</th>
-                            <th>Submitted At</th>
-                            <th>Actions</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -28,8 +26,7 @@
                         {
                             <tr>
                                 <td>@request.LastName, @request.FirstName</td>
-                                <td>@request.Email</td>
-                                <td>@request.Specialization</td>
+                                <td>@request.SubmittedAt.ToLocalTime().ToString("g")</td>
                                 @switch (request.Status)
                                 {
                                     case AccountRequestStatus.Pending:
@@ -44,17 +41,11 @@
                                     default:
                                         throw new ArgumentOutOfRangeException();
                                 }
-                                <td>@request.SubmittedAt.ToLocalTime().ToString("g")</td>
                                 <td>
                                     @if (request.Status == AccountRequestStatus.Pending)
                                     {
-                                        @using (Html.BeginForm("Approve", "AccountRequests", FormMethod.Post, new { @class = "d-inline" }))
-                                        {
-                                            @Html.Hidden("id", request.Id)
-                                            <button type="submit" class="btn btn-success btn-sm">Approve</button>
-                                        }
-                                        <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#rejectModal_@request.Id">
-                                            Reject
+                                        <button type="button" class="btn btn-dark btn-sm text-light" data-bs-toggle="modal" data-bs-target="#viewInfoModal_@request.Id">
+                                            Review
                                         </button>
                                     }
                                     else
@@ -73,25 +64,92 @@
 
 @foreach (var request in Model)
 {
-    <div class="modal fade" id="rejectModal_@request.Id" tabindex="-1" aria-labelledby="rejectModalLabel_@request.Id" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="rejectModalLabel_@request.Id">Reject Account Request</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    @using (Html.BeginForm("Reject", "AccountRequests", FormMethod.Post, new { @class = "d-inline" }))
-                    {
-                        <input type="hidden" name="id" value="@request.Id" />
-                        <div class="mb-3">
-                            <label for="rejectionReason_@request.Id" class="form-label">Reason</label>
-                            <textarea name="rejectionReason" id="rejectionReason_@request.Id" class="form-control" rows="3" required></textarea>
+    var addressBuilder = new StringBuilder();
+    addressBuilder.AppendLine(request.Address1)
+                  .AppendLine(request.Address2)
+                  .AppendLine($"{request.City}, {request.State}");
+
+<div class="modal fade" id="viewInfoModal_@request.Id" tabindex="-1" aria-labelledby="viewInfoModalLabel_@request.Id" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="viewInfoModalLabel_@request.Id">Account Request Information</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <p><strong>Full Name:</strong> @request.LastName, @request.FirstName</p>
+                            <p><strong>Date of Birth:</strong> @request.DateOfBirth.ToShortDateString()</p>
+                            <p><strong>Email:</strong> @request.Email</p>
+                            <p><strong>Phone:</strong> @request.PhoneNumber</p>
+                            <p><strong>Address:</strong> @addressBuilder</p>
+                            <p><strong>Medical License #:</strong> @request.MedicalLicenseNumber</p>
+                            <p><strong>Specialty:</strong> @request.Specialization</p>
+                            <p><strong>Years of Experience:</strong> @request.YearsOfExperience</p>
                         </div>
-                        <button type="submit" class="btn btn-danger">Reject</button>
-                    }
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <a href="@Url.Action("DownloadLicense", "AccountRequests", new {id = request.Id})" id="licenseDownload_@request.Id" class="btn btn-secondary btn-sm">License</a>
+                            <a href="@Url.Action("DownloadCertification", "AccountRequests", new {id = request.Id})" id="certificationDownload_@request.Id" class="btn btn-secondary btn-sm">Certification</a>
+                            <a href="@Url.Action("DownloadCV", "AccountRequests", new {id = request.Id})" id="cvDownload_@request.Id" class="btn btn-secondary btn-sm">CV</a>
+                        </div>
+                    </div>
                 </div>
+            </div>
+            <div class="modal-footer">
+                @using (Html.BeginForm("Approve", "AccountRequests", FormMethod.Post, new { @class = "d-inline" }))
+                {
+                    @Html.Hidden("id", request.Id)
+                    <button type="submit" class="btn btn-success btn-sm">Approve</button>
+                }
+                <button type="button" class="btn btn-danger btn-sm" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#rejectReasonModal_@request.Id">Reject</button>
             </div>
         </div>
     </div>
+</div>
+
+<div class="modal fade" id="rejectReasonModal_@request.Id" tabindex="-1" aria-labelledby="rejectReasonLabel_@request.Id" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="rejectReasonLabel_@request.Id">Reject Account Request</h5>
+                    <button type="button" class="btn-close" data-bs-toggle="modal" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm("Reject", "AccountRequests", FormMethod.Post, new { @class = "d-inline" }))
+                {
+                    @Html.Hidden("id", request.Id)
+                    <textarea class="form-control" name="rejectionReason" placeholder="Reason for rejection" required></textarea>
+                    <button type="submit" class="btn btn-primary btn-sm mt-2">Submit</button>
+                }
+            </div>
+        </div>
+    </div>
+</div>
 }
+
+<script>
+    $(document).ready(function () {
+        var viewInfoModals = $('[id^="viewInfoModal_"]');
+        var rejectReasonModals = $('[id^="rejectReasonModal_"]');
+
+        viewInfoModals.on('show.bs.modal', function () {
+            var modal = $(this);
+            var rejectButton = modal.find('button:contains("Reject")');
+            rejectButton.on('click', function () {
+                modal.modal('hide');
+            });
+        });
+
+        rejectReasonModals.on('show.bs.modal', function () {
+            var modal = $(this);
+            modal.on('hidden.bs.modal', function () {
+                var viewInfoModalId = modal.attr('id').replace('rejectReasonModal_', 'viewInfoModal_');
+                $('#' + viewInfoModalId).modal('show');
+            });
+        });
+    });
+</script>

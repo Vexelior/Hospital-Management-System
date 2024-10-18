@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace Application.Services
 {
-    public class AccountRequestService
+    public class AccountRequestService : IAccountRequestService
     {
         private readonly IAccountRequestRepository _repository;
         private readonly UserManager<ApplicationUser> _userManager;
@@ -28,6 +28,11 @@ namespace Application.Services
         public async Task<IEnumerable<AccountRequest>> GetAllRequestsAsync()
         {
             return await _repository.ListAllAsync();
+        }
+
+        public async Task<AccountRequest> GetRequestByIdAsync(Guid id)
+        {
+            return await _repository.GetByIdAsync(id);
         }
 
         private async Task<AccountRequest> GetRequestByEmailAsync(string email)

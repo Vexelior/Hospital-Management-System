@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Web.Models.ViewModels
 {
@@ -20,21 +21,27 @@ namespace Web.Models.ViewModels
         [EmailAddress]
         public string Email { get; set; }
 
+        [Required]
         [Phone]
         [Display(Name = "Phone Number")]
         public string PhoneNumber { get; set; }
-
+        
+        [Required]
         [Display(Name = "Address 1")]
         public string Address1 { get; set; }
 
         [Display(Name = "Address 2")]
         public string Address2 { get; set; }
 
+        [Required]
         [Display(Name = "City")]
         public string City { get; set; }
 
+        public List<SelectListItem> ListOfStates { get; set; }
+        
+        [Required]
         [Display(Name = "State")]
-        public string State { get; set; }
+        public string SelectedState { get; set; }
 
         [Required]
         [Display(Name = "Medical License Number")]
@@ -43,6 +50,7 @@ namespace Web.Models.ViewModels
         [Required]
         public string Specialization { get; set; }
 
+        [Required]
         [Display(Name = "Years of Experience")]
         public int YearsOfExperience { get; set; }
 

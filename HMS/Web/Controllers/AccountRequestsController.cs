@@ -2,6 +2,7 @@
 using Core.Entities.Account;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Web.Helpers;
 using Web.Models.ViewModels;
 
 namespace Web.Controllers
@@ -17,7 +18,12 @@ namespace Web.Controllers
 
         public IActionResult Create()
         {
-            return View();
+            var viewModel = new AccountRequestViewModel
+            {
+                ListOfStates = GeolocationHelper.ListOfStates()
+            };
+
+            return View(viewModel);
         }
 
         [HttpPost]
@@ -33,6 +39,41 @@ namespace Web.Controllers
                 return View(model);
             }
 
+            var listOfStates = GeolocationHelper.ListOfStates();
+            
+            if (listOfStates != null)
+            {
+                model.ListOfStates = listOfStates;
+            }
+
+            if (model.YearsOfExperience == 0)
+            {
+                ModelState.AddModelError("YearsOfExperience", "Years of experience must be greater than 0.");
+                return View(model);
+            }
+            
+            if (model.DateOfBirth == DateTime.MinValue || model.DateOfBirth > DateTime.Now)
+            {
+                ModelState.AddModelError("DateOfBirth", "Please enter a valid date of birth.");
+                return View(model);
+            }
+
+            var foundMatchingState = false;
+            foreach (var state in listOfStates)
+            {
+                if (state.Value == model.SelectedState)
+                {
+                    foundMatchingState = true;
+                    break;
+                }
+            }
+
+            if (!foundMatchingState)
+            {
+                ModelState.AddModelError("SelectedState", "Please select a valid state.");
+                return View(model);
+            }
+
             if (ModelState.IsValid)
             {
                 var request = new AccountRequest
@@ -44,7 +85,7 @@ namespace Web.Controllers
                     PhoneNumber = model.PhoneNumber,
                     Address1 = model.Address1,
                     Address2 = model.Address2,
-                    State = model.State,
+                    State = model.SelectedState,
                     City = model.City,
                     MedicalLicenseNumber = model.MedicalLicenseNumber,
                     Specialization = model.Specialization,

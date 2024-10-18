@@ -1731,8 +1731,7 @@ section,
         margin-bottom: 20px;
     }
 
-    #account-login-form input[type=text],
-    #account-login-form input[type=password] {
+    #account-login-form input {
         font-size: 14px;
         padding: 10px 15px;
         box-shadow: none;
@@ -1742,13 +1741,29 @@ section,
         border-color: color-mix(in srgb, var(--default-color), transparent 80%);
     }
 
-        #account-login-form input[type=text]:focus,
-        #account-login-form input[type=password]:focus {
+    #account-login-form textarea {
+        padding: 10px 15px;
+        box-shadow: none;
+        border-radius: 0;
+        color: var(--default-color);
+        background-color: color-mix(in srgb, var(--background-color), transparent 50%);
+        border-color: color-mix(in srgb, var(--default-color), transparent 80%);
+    }
+
+    #account-login-form select {
+        padding: 10px 15px;
+        box-shadow: none;
+        border-radius: 0;
+        color: var(--default-color);
+        background-color: color-mix(in srgb, var(--background-color), transparent 50%);
+        border-color: color-mix(in srgb, var(--default-color), transparent 80%);
+    }
+
+        #account-login-form input:focus {
             border-color: var(--accent-color);
         }
 
-        #account-login-form input[type=text]::placeholder,
-        #account-login-form input[type=password]::placeholder {
+        #account-login-form input::placeholder {
             color: color-mix(in srgb, var(--default-color), transparent 70%);
         }
 
