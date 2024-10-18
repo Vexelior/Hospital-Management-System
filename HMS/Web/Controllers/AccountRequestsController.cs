@@ -37,7 +37,7 @@ namespace Web.Controllers
 
             if (potentialExistingRequest)
             {
-                ModelState.AddModelError(string.Empty, "An account request with this email or medical license number already exists.");
+                ModelState.AddModelError("Email", "An account request with this email already exists.");
                 return View(model);
             }
 

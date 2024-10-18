@@ -3,11 +3,17 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="container">
+<div class="container" style="height: 100vh !important;">
     <div class="row">
         <div class="col-md-12">
             <h1>Request Submitted Successfully</h1>
             <p>Your account request has been submitted and is pending approval. You will receive an email notification once your request is reviewed.</p>
+        </div>
+        <div class="col-md-12 text-center">
+            <img src="~/assets/img/success.png" class="img-fluid" alt="Success" />
+        </div>
+        <div class="col-md-12 mb-2">
+            <a href="@Url.Action("Index", "Home")" class="btn btn-primary">Return to Home</a>
         </div>
     </div>
 </div>

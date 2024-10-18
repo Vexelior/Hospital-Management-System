@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using Application.Interfaces;
+﻿using Application.Interfaces;
 using Microsoft.Extensions.Configuration;
 using System.Net.Mail;
 using System.Net;
@@ -19,14 +18,14 @@ namespace Application.Services
         {
             var smtpClient = new SmtpClient(_configuration["Email:SmtpServer"])
             {
-                Port = int.Parse(_configuration["Email:SmtpPort"]),
+                Port = int.Parse(_configuration["Email:SmtpPort"] ?? throw new InvalidOperationException()),
                 Credentials = new NetworkCredential(_configuration["Email:Username"], _configuration["Email:Password"]),
-                EnableSsl = bool.Parse(_configuration["Email:EnableSsl"]),
+                EnableSsl = bool.Parse(_configuration["Email:EnableSsl"] ?? throw new InvalidOperationException()) 
             };
 
             var mailMessage = new MailMessage
             {
-                From = new MailAddress(_configuration["Email:FromAddress"]),
+                From = new MailAddress(_configuration["Email:FromAddress"] ?? throw new InvalidOperationException(), _configuration["Email:FromName"]),
                 Subject = subject,
                 Body = message,
                 IsBodyHtml = true,

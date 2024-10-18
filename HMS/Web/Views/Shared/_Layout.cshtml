@@ -4,6 +4,9 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - HMS</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="~/icons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="~/icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="~/icons/favicon-16x16.png">    
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/lib/fontawesome/css/all.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
@@ -32,8 +35,7 @@
         <div class="branding d-flex align-items-center">
             <div class="container position-relative d-flex align-items-center justify-content-between">
                 <a href="@Url.Action("Index", "Home")" class="logo d-flex align-items-center me-auto">
-                    <!-- <img src="assets/img/logo.png" alt=""> -->
-                    <h1 class="sitename">HMS</h1>
+                    <img src="assets/img/logo.png" class="img img-fluid" alt="HMS LOGO">
                 </a>
                 <nav id="navmenu" class="navmenu">
                     <ul>

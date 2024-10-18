@@ -41,6 +41,85 @@
 }
 
 /*--------------------------------------------------------------
+# Buttons
+--------------------------------------------------------------*/
+.btn-primary {
+    color: #fff;
+    background-color: var(--accent-color);
+    border-color: var(--accent-color);
+}
+
+    .btn-primary:hover {
+        color: #fff;
+        background-color: #0f5b9d;
+        border-color: #0f5b9d;
+    }
+
+    .btn-primary:focus {
+        color: #fff;
+        background-color: #0f5b9d;
+        border-color: #0f5b9d;
+        box-shadow: 0 0 0 0.2rem rgba(25, 119, 204, 0.5);
+    }
+
+.btn-secondary {
+    color: #fff;
+    background-color: #6c757d;
+    border-color: #6c757d;
+}
+
+    .btn-secondary:hover {
+        color: #fff;
+        background-color: #5a6268;
+        border-color: #545b62;
+    }
+
+    .btn-secondary:focus {
+        color: #fff;
+        background-color: #5a6268;
+        border-color: #545b62;
+        box-shadow: 0 0 0 0.2rem rgba(108, 117, 125, 0.5);
+    }
+
+.btn-tertiary {
+    color: #fff;
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+    .btn-tertiary:hover {
+        color: #fff;
+        background-color: #0056b3;
+        border-color: #004f9b;
+    }
+
+    .btn-tertiary:focus {
+        color: #fff;
+        background-color: #0056b3;
+        border-color: #004f9b;
+        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.5);
+    }
+
+.btn-light {
+    color: #212529;
+    background-color: #f8f9fa;
+    border-color: #f8f9fa;
+}
+
+    .btn-light:hover {
+        color: #212529;
+        background-color: #e2e6ea;
+        border-color: #dae0e5;
+    }
+
+    .btn-light:focus {
+        color: #212529;
+        background-color: #e2e6ea;
+        border-color: #dae0e5;
+        box-shadow: 0 0 0 0.2rem rgba(248, 249, 250, 0.5);
+    }
+
+/*--------------------------------------------------------------
 # General Styling & Shared Classes
 --------------------------------------------------------------*/
 body {
@@ -217,7 +296,7 @@ h6 {
 }
 
     .header .logo img {
-        max-height: 36px;
+        max-height: 100px;
         margin-right: 8px;
     }
 
@@ -1731,7 +1810,7 @@ section,
         margin-bottom: 20px;
     }
 
-    #account-login-form input {
+    #account-login-form input:not([type="checkbox"]) {
         font-size: 14px;
         padding: 10px 15px;
         box-shadow: none;

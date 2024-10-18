@@ -25,7 +25,7 @@ namespace Core.Entities.Account
         public string Email { get; init; }
 
         [Phone]
-        [StringLength(12)]
+        [StringLength(14)]
         public string PhoneNumber { get; init; }
 
         [Required]
