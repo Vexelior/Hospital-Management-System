@@ -6,6 +6,7 @@ using Infrastructure.Data;
 using Infrastructure.Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
 using Web.Data;
 using Web.Extensions;
 
@@ -44,6 +45,27 @@ builder.Services.AddScoped<AccountRequestService>();
 
 builder.Services.AddTransient<IEmailService, EmailService>();
 // End Services \\
+
+// Logging \\
+var logFile = $"log-{DateTime.Now:yyyy-MM-dd}.log";
+var logFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Logs", logFile);
+
+if (!Directory.Exists(Path.Combine(Directory.GetCurrentDirectory(), "Logs")))
+{
+    Directory.CreateDirectory(Path.Combine(Directory.GetCurrentDirectory(), "Logs"));
+}
+
+Log.Logger = new LoggerConfiguration()
+    .MinimumLevel.Information()
+    .WriteTo.Console()
+    .WriteTo.File(logFilePath, rollingInterval: RollingInterval.Day)
+    .CreateLogger();
+
+builder.Services.AddLogging(loggingBuilder =>
+{
+    loggingBuilder.AddSerilog(dispose: true);
+});
+// End Logging \\
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddControllersWithViews();
