@@ -26,7 +26,15 @@
         <li class="dropdown identity-dropdown-menu-inner">
             <span>Hello, @firstName!</span> <i class="bi bi-chevron-down toggle-dropdown"></i>
             <ul>
-                <li><a href="@Url.Action("Index", "Home", new { Area = "Admin" })">Dashboard</a></li>
+                @if (User.IsInRole("Administrator"))
+                {
+                    <li><a href="@Url.Action("Index", "Home", new { Area = "Admin" })">Dashboard</a></li>
+                }
+                
+                @if (User.IsInRole("Provider"))
+                {
+                    <li><a href="@Url.Action("Index", "Home", new { Area = "Provider" })">Dashboard</a></li>
+                }
                 <a asp-area="Identity" asp-page="/Account/Manage/Index">Account Settings</a>                
             </ul>
         </li>

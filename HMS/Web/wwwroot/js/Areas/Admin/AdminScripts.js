@@ -18,7 +18,6 @@ document.addEventListener('scroll', toggleScrollTop);
 // Toggle the side navigation
 window.addEventListener('DOMContentLoaded', event => {
     const sidebarToggle = document.body.querySelector('#sidebarToggle');
-    console.log(preloader);
     if (sidebarToggle) {
         // Uncomment Below to persist sidebar toggle between refreshes
         // if (localStorage.getItem('sb|sidebar-toggle') === 'true') {

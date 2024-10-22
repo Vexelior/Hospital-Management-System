@@ -1,0 +1,76 @@
+﻿@model Web.Areas.Provider.Models.ViewModels.SubmitClaimViewModel
+
+@{
+    ViewBag.Title = "Submit Claim";
+    Layout = "~/Areas/Provider/Views/Shared/_ProviderLayout.cshtml";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h2 class="text-center">Submit Claim</h2>
+            <hr />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <form asp-action="Create" method="post" id="submit-claim-form">
+                @Html.HiddenFor(x => x.ProviderId)
+                @Html.HiddenFor(x => x.SelectedPatientId)
+                @Html.HiddenFor(x => x.SelectedClaimType)
+                @Html.HiddenFor(x => x.TotalAmountComputed)
+                <div class="form-group">
+                    <label asp-for="PatientId">Patient</label>
+                    <select asp-for="PatientId" id="PatientId" class="form-control" asp-items="Model.Patients">
+                        <option value="" selected disabled>Select Patient</option>
+                        @foreach (var patient in Model.Patients)
+                        {
+                            <option value="@patient.Value">@patient.Text</option>
+                        }
+                    </select>
+                    <span asp-validation-for="PatientId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Number">Type</label>
+                    <select asp-for="Status" class="form-control" id="Status" asp-items="Model.ClaimTypes">
+                        <option value="" selected disabled>Select Type</option>
+                        @foreach (var type in Model.ClaimTypes)
+                        {
+                            <option value="@type.Value">@type.Text</option>
+                        }
+                    </select>
+                    <span asp-validation-for="Status" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="TotalAmount">Total</label>
+                    <input asp-for="TotalAmount" id="TotalAmount" class="form-control" type="number" step="0.01" />
+                    <span asp-validation-for="TotalAmount" class="text-danger"></span>
+                </div>
+                <button type="submit" class="btn btn-primary mt-2">Submit Claim</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    
+    <script>
+        $(document).ready(function () {
+            $("#PatientId").change(function () {
+                var patientId = $(this).val();
+                $("#SelectedPatientId").val(patientId);
+            });
+
+            $("#Status").change(function () {
+                var claimType = $(this).val();
+                $("#SelectedClaimType").val(claimType);
+            });
+
+            $("#TotalAmount").change(function () {
+                var totalAmount = $(this).val();
+                $("#TotalAmountComputed").val(totalAmount);
+            });
+        });
+    </script>
+}

@@ -63,6 +63,24 @@ namespace Application.Services
             return providerDtos;
         }
 
+        public async Task<IEnumerable<PatientDto>> GetPatientsByProviderAsync(Guid providerId)
+        {
+            var patients = await _providerRepository.GetPatientsByProviderAsync(providerId);
+            var patientDtos = new List<PatientDto>();
+
+            foreach (var patientDto in patients)
+            {
+                var patient = new PatientDto();
+                foreach (var property in patientDto.GetType().GetProperties())
+                {
+                    patient.GetType().GetProperty(property.Name)?.SetValue(patient, property.GetValue(patientDto));
+                }
+                patientDtos.Add(patient);
+            }
+
+            return patientDtos;
+        }
+
         public async Task AddProviderAsync(ProviderDto provider)
         {
             var newProvider = new Provider();

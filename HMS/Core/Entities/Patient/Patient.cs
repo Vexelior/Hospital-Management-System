@@ -39,6 +39,14 @@ namespace Core.Entities.Patient
         public string Email { get; set; }
         [MaxLength(50)]
         public string MaritalStatus { get; set; }
+        [MaxLength(50)]
+        public string InsurancePolicyNumber { get; set; }
+        [MaxLength(50)]
+        public string InsuranceCompany { get; set; }
+        [MaxLength(50)]
+        public string InsuranceGroupNumber { get; set; }
+        [MaxLength(50)]
+        public Guid ProviderId { get; set; }
         public char Gender { get; set; }
     }
 }

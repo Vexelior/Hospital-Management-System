@@ -117,13 +117,16 @@ namespace Web.Areas.Identity.Pages.Account
                 {
                     _logger.LogInformation("User logged in.");
 
-                    if (User.IsInRole("Administrator"))
-                    {
-                        return RedirectToAction("Index", "Home", new { Area = "Admin" });
-                    }
+                    var userRole = await _signInManager.UserManager.GetRolesAsync(await _signInManager.UserManager.FindByEmailAsync(Input.Email));
 
-                    return LocalRedirect(returnUrl);
+                    return userRole[0] switch
+                    {
+                        "Administrator" => RedirectToAction("Index", "Home", new {Area = "Admin"}),
+                        "Provider" => RedirectToAction("Index", "Home", new {Area = "Provider"}),
+                        _ => RedirectToAction("Index", "Home", new {Area = ""})
+                    };
                 }
+
                 if (result.RequiresTwoFactor)
                 {
                     return RedirectToPage("./LoginWith2fa", new { ReturnUrl = returnUrl, RememberMe = Input.RememberMe });

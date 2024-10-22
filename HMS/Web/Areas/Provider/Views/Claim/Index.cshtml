@@ -1,0 +1,116 @@
+﻿@model Web.Areas.Provider.Models.ViewModels.ClaimIndexViewModel
+@inject Infrastructure.Data.HospitalContext Context
+
+@{
+    ViewBag.Title = "Claims";
+    Layout = "~/Areas/Provider/Views/Shared/_ProviderLayout.cshtml";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h2 class="text-center">Claims</h2>
+            <hr />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <form asp-action="Index" method="get">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" name="searchString" placeholder="Search by claim number or name" value="@Model.SearchString">
+                    <div class="input-group-append">
+                        <button class="btn btn-secondary" type="submit">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+            @if (!Model.Claims.Any())
+            {
+                <p class="text-center">No claims found.</p>
+            }
+            @foreach (var claim in Model.Claims)
+            {
+                var patient = await Context.Patients.FindAsync(claim.PatientId);
+
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5 class="card-title">
+                            <a href="@Url.Action("Details", "Claim", new {id = claim.Id})">
+                                Claim #: @claim.Number
+                            </a>
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">
+                            Patient: @patient.LastName, @patient.FirstName
+                        </p>
+                        <p class="card-text">
+                            Date: @claim.DateOfSubmission.ToString("MM/dd/yyyy")
+                        </p>
+                        <p class="card-text">
+                            Status: @claim.Status
+                        </p>
+                        <p class="card-text">
+                            Amount: <span class="TotalAmount">@claim.TotalAmount.ToString("C")</span>
+                        </p>
+                        <p class="card-text">
+                            Paid: <span class="TotalAmount">@claim.AmountPaid.ToString("C")</span>
+                        </p>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+    
+    @if (Model.Claims.Any() && Model.Claims.Count() > 1)
+    {
+        <div class="row">
+            <div class="col-md-12">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+                        @if (Model.Pagination.HasPrevious)
+                        {
+                            <li class="page-item">
+                                <a class="page-link" href="@Url.Action("Index", "Claim", new {Area = "Provider", page = 1, searchString = Model.SearchString})">First</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="@Url.Action("Index", "Claim", new {Area = "Provider", page = Model.Pagination.CurrentPage - 1, searchString = Model.SearchString})">Previous</a>
+                            </li>
+                        }
+                        @for (var i = 1; i <= Model.Pagination.TotalPages; i++)
+                        {
+                            <li class="page-item @(i == ViewBag.PageIndex ? "active" : "")">
+                                <a class="page-link" href="@Url.Action("Index", "Claim", new {Area = "Provider", page = i, searchString = Model.SearchString})">@i</a>
+                            </li>
+                        }
+                        @if (Model.Pagination.HasNext)
+                        {
+                            <li class="page-item">
+                                <a class="page-link" href="@Url.Action("Index", "Claim", new {Area = "Provider", page = ViewBag.PageIndex + 1, searchString = ViewBag.CurrentFilter})">Next</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="@Url.Action("Index", "Claim", new {Area = "Provider", page = ViewBag.TotalPages, searchString = ViewBag.CurrentFilter})">Last</a>
+                            </li>
+                        }
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    }
+</div>
+
+<script>
+    //Convert the TotalAmount and TotalAmountPaid to US currency, e.g. "1234.56" to "$1,234.56"
+    var totalAmount = document.getElementsByClassName("TotalAmount")
+    var amountPaid = document.getElementsByClassName("AmountPaid");
+
+    for (var i = 0; i < totalAmount.length; i++) {
+        totalAmount[i].innerHTML =  numberWithCommas(totalAmount[i].innerHTML);
+        amountPaid[i].innerHTML = numberWithCommas(amountPaid[i].innerHTML);
+    }
+
+    function numberWithCommas(x) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+</script>

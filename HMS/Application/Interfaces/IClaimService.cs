@@ -10,5 +10,6 @@ namespace Application.Interfaces
         Task AddClaimAsync(ClaimDto claimDto);
         Task UpdateClaimAsync(ClaimDto claimDto);
         Task DeleteClaimAsync(Guid id);
+        Task SubmitClaimAsync(ClaimDto claim);
     }
 }

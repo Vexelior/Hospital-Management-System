@@ -9,9 +9,13 @@
 
   <ItemGroup>
     <Compile Remove="wwwroot\js\NewFolder\**" />
+    <Compile Remove="wwwroot\uploads\**" />
     <Content Remove="wwwroot\js\NewFolder\**" />
+    <Content Remove="wwwroot\uploads\**" />
     <EmbeddedResource Remove="wwwroot\js\NewFolder\**" />
+    <EmbeddedResource Remove="wwwroot\uploads\**" />
     <None Remove="wwwroot\js\NewFolder\**" />
+    <None Remove="wwwroot\uploads\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -37,10 +41,9 @@
   <ItemGroup>
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\Admin\Models\" />
-    <Folder Include="Logging\" />
+    <Folder Include="Areas\Provider\Data\" />
     <Folder Include="Logs\" />
     <Folder Include="wwwroot\assets\" />
-    <Folder Include="wwwroot\uploads\" />
   </ItemGroup>
 
 </Project>

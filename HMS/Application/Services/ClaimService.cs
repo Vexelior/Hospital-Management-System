@@ -66,6 +66,24 @@ namespace Application.Services
             return claimDtos;
         }
 
+        public async Task SubmitClaimAsync(ClaimDto claimDto)
+        {
+            var claim = new Claim();
+
+            foreach (var property in claimDto.GetType().GetProperties())
+            {
+                var claimProperty = claim.GetType().GetProperty(property.Name);
+                if (claimProperty != null) claimProperty.SetValue(claim, property.GetValue(claimDto));
+            }
+
+            await _claimRepository.AddAsync(claim);
+        }
+
+        public IEnumerable<string> GetClaimTypes()
+        {
+            return Enum.GetNames(typeof(ClaimType));
+        }
+
         public async Task AddClaimAsync(ClaimDto claimDto)
         {
             var claim = new Claim();

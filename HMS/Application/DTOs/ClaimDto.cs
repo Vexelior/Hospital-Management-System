@@ -1,11 +1,14 @@
-﻿namespace Application.DTOs
+﻿using Core.Entities.Claims;
+
+namespace Application.DTOs
 {
     public class ClaimDto
     {
         public Guid Id { get; set; }
         public string Number { get; set; }
         public string Type { get; set; }
-        public char Status { get; set; }
+        public ClaimStatus Status { get; set; }
+        public ClaimType ClaimType { get; set; }
         public DateTime FirstDateOfService { get; set; }
         public DateTime LastDateOfService { get; set; }
         public DateTime DateCreated { get; set; }

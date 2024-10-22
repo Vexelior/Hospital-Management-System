@@ -29,6 +29,8 @@ namespace Core.Entities.Provider
         public string Email { get; set; }
         [MaxLength(10)]
         public string Fax { get; set; }
+        [MaxLength(50)]
+        public string Specialty { get; set; }
         public Guid ProviderServiceLocationId { get; set; }
     }
 }
