@@ -24,6 +24,15 @@
                         </button>
                     </div>
                 </div>
+                <div class="form-group">
+                    <label for="pageSize">Rows per page:</label>
+                    <select class="form-control" id="pageSize" name="pageSize">
+                        <option value="5" @(Model.Pagination.PageSize == 5 ? "selected" : "")>5</option>
+                        <option value="10" @(Model.Pagination.PageSize == 10 ? "selected" : "")>10</option>
+                        <option value="15" @(Model.Pagination.PageSize == 15 ? "selected" : "")>15</option>
+                        <option value="20" @(Model.Pagination.PageSize == 20 ? "selected" : "")>20</option>
+                    </select>
+                </div>
             </form>
             @if (!Model.Claims.Any())
             {
@@ -62,8 +71,8 @@
             }
         </div>
     </div>
-    
-    @if (Model.Claims.Any() && Model.Claims.Count() > 1)
+
+    @if (Model.Claims.Any())
     {
         <div class="row">
             <div class="col-md-12">
@@ -72,25 +81,27 @@
                         @if (Model.Pagination.HasPrevious)
                         {
                             <li class="page-item">
-                                <a class="page-link" href="@Url.Action("Index", "Claim", new {Area = "Provider", page = 1, searchString = Model.SearchString})">First</a>
-                            </li>
-                            <li class="page-item">
-                                <a class="page-link" href="@Url.Action("Index", "Claim", new {Area = "Provider", page = Model.Pagination.CurrentPage - 1, searchString = Model.SearchString})">Previous</a>
+                                <a class="page-link" href="@Url.Action("Index", "Claim", new { Area = "Provider", pageNumber = Model.Pagination.CurrentPage - 1, searchString = Model.SearchString, pageSize = Model.Pagination.PageSize })">
+                                    <span aria-hidden="true">
+                                        <i class="fas fa-angle-left"></i>
+                                    </span>
+                                </a>
                             </li>
                         }
                         @for (var i = 1; i <= Model.Pagination.TotalPages; i++)
                         {
-                            <li class="page-item @(i == ViewBag.PageIndex ? "active" : "")">
-                                <a class="page-link" href="@Url.Action("Index", "Claim", new {Area = "Provider", page = i, searchString = Model.SearchString})">@i</a>
+                            <li class="page-item @(i == Model.Pagination.CurrentPage ? "active" : "")">
+                                <a class="page-link" href="@Url.Action("Index", "Claim", new { Area = "Provider", pageNumber = i, searchString = Model.SearchString, pageSize = Model.Pagination.PageSize })">@i</a>
                             </li>
                         }
                         @if (Model.Pagination.HasNext)
                         {
                             <li class="page-item">
-                                <a class="page-link" href="@Url.Action("Index", "Claim", new {Area = "Provider", page = ViewBag.PageIndex + 1, searchString = ViewBag.CurrentFilter})">Next</a>
-                            </li>
-                            <li class="page-item">
-                                <a class="page-link" href="@Url.Action("Index", "Claim", new {Area = "Provider", page = ViewBag.TotalPages, searchString = ViewBag.CurrentFilter})">Last</a>
+                                <a class="page-link" href="@Url.Action("Index", "Claim", new { Area = "Provider", pageNumber = Model.Pagination.CurrentPage + 1, searchString = Model.SearchString, pageSize = Model.Pagination.PageSize })">
+                                    <span aria-hidden="true">
+                                        <i class="fas fa-angle-right"></i>
+                                    </span>
+                                </a>
                             </li>
                         }
                     </ul>
@@ -99,18 +110,3 @@
         </div>
     }
 </div>
-
-<script>
-    //Convert the TotalAmount and TotalAmountPaid to US currency, e.g. "1234.56" to "$1,234.56"
-    var totalAmount = document.getElementsByClassName("TotalAmount")
-    var amountPaid = document.getElementsByClassName("AmountPaid");
-
-    for (var i = 0; i < totalAmount.length; i++) {
-        totalAmount[i].innerHTML =  numberWithCommas(totalAmount[i].innerHTML);
-        amountPaid[i].innerHTML = numberWithCommas(amountPaid[i].innerHTML);
-    }
-
-    function numberWithCommas(x) {
-        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    }
-</script>

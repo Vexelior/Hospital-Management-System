@@ -29,72 +29,63 @@ namespace Web.Areas.Provider.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index(string searchString, int pageNumber = 1)
+        public async Task<IActionResult> Index(string searchString, int pageNumber = 1, int pageSize = 5)
         {
-            var viewModel = new ClaimIndexViewModel();
             var claims = await _claimService.GetAllClaimsAsync();
-
-            var pageSize = 10;
-            var count = claims.Count();
-            var totalPages = (int)Math.Ceiling(count / (double)pageSize);
 
             if (!string.IsNullOrEmpty(searchString))
             {
-                var searchQueryClaims = new List<ClaimDto>();
-
-                if (searchString.All(char.IsDigit))
-                {
-                    searchQueryClaims = claims.Where(c => c.Number.Contains(searchString)).ToList();
-                    claims = searchQueryClaims;
-                }
-
-                if (searchString.All(char.IsLetter))
-                {
-                    var patientIds = claims.Select(c => c.PatientId).ToList();
-                    foreach (var id in patientIds)
-                    {
-                        var patient = await _patientService.GetPatientByIdAsync(id);
-                        if (patient != null && (patient.FirstName.ToLower().Contains(searchString.ToLower()) || patient.LastName.ToLower().Contains(searchString.ToLower())))
-                        {
-                            searchQueryClaims.Add(claims.FirstOrDefault(c => c.PatientId == id));
-                        }
-                    }
-
-                    claims = searchQueryClaims;
-                }
-
-                claims = claims.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
-
-                var searchModel = new ClaimIndexViewModel
-                {
-                    Claims = claims,
-                    Pagination = new Pagination
-                    {
-                        TotalPages = totalPages,
-                        CurrentPage = pageNumber,
-                        PageSize = pageSize,
-                        HasPrevious = pageNumber > 1,
-                        HasNext = pageNumber < totalPages
-                    },
-                    SearchString = searchString
-                };
-
-                return View(searchModel);
+                claims = await FilterClaimsBySearchString(claims, searchString);
             }
 
-            claims.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
+            var count = claims.Count();
+            var totalPages = (int)Math.Ceiling(count / (double)pageSize);
 
-            viewModel.Claims = claims;
-            viewModel.Pagination = new Pagination
+            // Order first, then paginate
+            claims = claims.OrderBy(x => x.DateOfSubmission)
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
+
+            var viewModel = new ClaimIndexViewModel
             {
-                TotalPages = totalPages,
-                CurrentPage = pageNumber,
-                PageSize = pageSize,
-                HasPrevious = pageNumber > 1,
-                HasNext = pageNumber < totalPages
+                Claims = claims,
+                Pagination = new Pagination
+                {
+                    TotalPages = totalPages,
+                    CurrentPage = pageNumber,
+                    PageSize = pageSize,
+                    HasPrevious = pageNumber > 1,
+                    HasNext = pageNumber < totalPages
+                },
+                SearchString = searchString
             };
 
             return View(viewModel);
+        }
+
+        private async Task<List<ClaimDto>> FilterClaimsBySearchString(IEnumerable<ClaimDto> claims, string searchString)
+        {
+            var searchQueryClaims = new List<ClaimDto>();
+
+            if (searchString.All(char.IsDigit))
+            {
+                searchQueryClaims = claims.Where(c => c.Number.Contains(searchString)).ToList();
+            }
+            else if (searchString.All(char.IsLetter))
+            {
+                var patientIds = claims.Select(c => c.PatientId).Distinct().ToList();
+                foreach (var id in patientIds)
+                {
+                    var patient = await _patientService.GetPatientByIdAsync(id);
+                    if (patient != null && (patient.FirstName.ToLower().Contains(searchString.ToLower()) || patient.LastName.ToLower().Contains(searchString.ToLower())))
+                    {
+                        searchQueryClaims.AddRange(claims.Where(c => c.PatientId == id));
+                    }
+                }
+            }
+
+            return searchQueryClaims;
         }
 
         public async Task<IActionResult> Create()
