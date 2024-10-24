@@ -43,6 +43,7 @@ builder.Services.AddScoped<ClaimService>();
 builder.Services.AddScoped<IAccountRequestRepository, AccountRequestRepository>();
 builder.Services.AddScoped<AccountRequestService>();
 
+builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddTransient<IEmailService, EmailService>();
 // End Services \\
 

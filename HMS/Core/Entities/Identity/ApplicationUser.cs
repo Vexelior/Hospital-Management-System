@@ -11,5 +11,6 @@ namespace Core.Entities.Identity
         public string LastName { get; set; }
         public DateTime DateOfBirth { get; set; }
         public bool IsOnline { get; set; }
+        public bool HasChangedPassword { get; set; } = false;
     }
 }
