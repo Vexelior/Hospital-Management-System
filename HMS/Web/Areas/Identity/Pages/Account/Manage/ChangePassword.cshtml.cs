@@ -95,7 +95,7 @@ namespace Web.Areas.Identity.Pages.Account.Manage
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(bool firstTime)
         {
             if (!ModelState.IsValid)
             {
@@ -105,7 +105,7 @@ namespace Web.Areas.Identity.Pages.Account.Manage
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
-                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+                return Redirect("Login");
             }
 
             var changePasswordResult = await _userManager.ChangePasswordAsync(user, Input.OldPassword, Input.NewPassword);
@@ -118,6 +118,7 @@ namespace Web.Areas.Identity.Pages.Account.Manage
                 return Page();
             }
 
+            user.HasChangedPassword = true;
             await _signInManager.RefreshSignInAsync(user);
             _logger.LogInformation("User changed their password successfully.");
             StatusMessage = "Your password has been changed.";
